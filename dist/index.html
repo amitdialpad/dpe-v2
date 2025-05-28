@@ -1,12 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main.css">
-    <title>CTI-V2</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Call Interface</title>
+  <link rel="stylesheet" href="css/main.css">
+  <!---<link rel="stylesheet" href=" https://unpkg.com/@dialpad/dialtone/dist/css/dialtone-default-theme.min.css ">
+  <link rel="stylesheet" href=" https://unpkg.com/@dialpad/dialtone/dist/css/dialtone.min.css "> --> 
+
 </head>
 <body>
-    <h1>Hello</h1>
+
+  <!-- ==================================
+       TOP ACTIONS (Move, Expand)
+       ================================== -->
+  <div class="top-actions">
+    <button class="icon-btn">
+      <img src="/dist/images/move.svg" alt="Move">
+    </button>
+    <button class="icon-btn">
+      <img src="/dist/images/external-link.svg" alt="Expand">
+    </button>
+  </div>
+
+  <div class="call-interface">
+
+    <!-- ==================================
+         HEADER (Avatar, Info, Call Details)
+         ================================== -->
+    <div class="header">
+      <div class="avatar">
+        <img src="/dist/images/avatar.png" alt="Maria Reyes">
+      </div>
+      <div class="info-block">
+        <h2 class="name">Maria Reyes</h2>
+        <div class="status">
+          <span class="status-dot"></span>
+          <span>Credit Card Help Center</span>
+        </div>
+        <div class="call-info">
+          <span>(919) 123-4567</span>
+          <span class="separator">•</span>
+          <span>0:12</span>
+          <span class="nqi"><img src="/dist/images/nqi.svg" alt="NQI"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================================
+         CONTROLS AREA
+         ================================== -->
+    <div class="controls-area">
+
+      <!-- Default 3x3 Grid (landing view) -->
+      <div class="controls-grid" id="default-grid">
+        <button class="control-btn"><img src="/dist/images/mic.svg" alt="Mute"><span>Mute</span></button>
+        <button class="control-btn"><img src="/dist/images/hold.svg" alt="Hold"><span>Hold</span></button>
+        <button class="control-btn"><img src="/dist/images/transfer.svg" alt="Transfer"><span>Transfer</span></button>
+        <button class="control-btn"><img src="/dist/images/record.svg" alt="Record"><span>Record</span></button>
+        <button class="control-btn"><img src="/dist/images/keypad.svg" alt="Keypad"><span>Keypad</span></button>
+        <button class="control-btn"><img src="/dist/images/add.svg" alt="Add"><span>Add</span></button>
+        <button class="control-btn"><img src="/dist/images/share.svg" alt="Share"><span>Share</span></button>
+        <button class="control-btn"><img src="/dist/images/park.svg" alt="Park"><span>Park</span></button>
+        <button class="control-btn"><img src="/dist/images/vm.svg" alt="VM"><span>VM</span></button>
+      </div>
+
+      <!-- Compact Horizontal Controls (transcript open mode) -->
+      <div class="compact-bar hidden" id="compact-bar">
+        <button class="control-btn"><img src="/dist/images/mic.svg" alt="Mute"><span>Mute</span></button>
+        <button class="control-btn"><img src="/dist/images/hold.svg" alt="Hold"><span>Hold</span></button>
+        <button class="control-btn"><img src="/dist/images/transfer.svg" alt="Transfer"><span>Transfer</span></button>
+        <button class="control-btn"><img src="/dist/images/record.svg" alt="Record"><span>Record</span></button>
+        <button class="control-btn" id="more-btn"><img src="/dist/images/more-horizontal.svg" alt="More"><span>More</span></button>
+        <button class="control-btn end-call"><span><img src="/dist/images/end-call-left.svg" alt="End Call Icon"></span></button>
+      </div>
+
+      <!-- More Controls (revealed when 'More' clicked) -->
+      <div class="compact-more hidden" id="more-controls">
+        <button class="control-btn"><img src="/dist/images/keypad.svg" alt="Keypad"><span>Keypad</span></button>
+        <button class="control-btn"><img src="/dist/images/add.svg" alt="Add"><span>Add</span></button>
+        <button class="control-btn"><img src="/dist/images/share.svg" alt="Share"><span>Share</span></button>
+        <button class="control-btn"><img src="/dist/images/park.svg" alt="Park"><span>Park</span></button>
+        <button class="control-btn"><img src="/dist/images/vm.svg" alt="VM"><span>VM</span></button>
+      </div>
+
+      <!-- Big End Call Button (landing view only) -->
+      <div class="end-call-wrapper" id="default-end-call">
+        <button class="end-call-btn">
+          <img src="/dist/images/end-call-left.svg" alt="End Call Icon">
+          <span>End Call</span>
+        </button>
+      </div>
+
+    </div> <!-- End of controls-area -->
+
+    <!-- ==================================
+         PANEL: TRANSCRIPT TAB CONTENT
+         ================================== -->
+    <div class="transcript-panel panel hidden" id="transcript-panel">
+      <div class="ai-status">
+        <span class="label-text">Ai Transcribing...</span>
+        <label class="dt-toggle">
+          <input type="checkbox" checked>
+          <span class="slider"></span>
+        </label>         
+      </div>
+      <div class="transcript-content">
+        <div class="small-avatar"><img src="/dist/images/avatar-maria-small.png" alt="Maria Reyes">
+        <div class="msg user"><strong>Maria Reyes</strong><p>Hi, I’d like to inquire about upgrading my credit card account.</p></div></div>
+
+        <div class="small-avatar"><img src="/dist/images/avatar-agent-small.png" alt="EJ">
+        <div class="msg agent"><strong>EJ</strong><p>Sure, Maria! I’d be happy to assist. Can you tell me which credit card you currently have?</p></div></div>
+
+        <div class="small-avatar"><img src="/dist/images/avatar-maria-small.png" alt="Maria Reyes">
+        <div class="msg user"><strong>Maria Reyes</strong><p>I have the Silver Rewards Card, but I was looking at the Platinum one...</p></div></div>
+
+        <div class="small-avatar"><img src="/dist/images/avatar-agent-small.png" alt="EJ">
+        <div class="msg agent"><strong>EJ</strong><p>Yes, let me check your account details. Could you please provide the customer code for verification?</p></div></div>
+
+        <div class="small-avatar"><img src="/dist/images/avatar-agent-small.png" alt="EJ">
+            <div class="msg agent"><strong>EJ</strong><p>Yes, let me check your account details. Could you please provide the customer code for verification?</p></div></div>
+
+        <div class="small-avatar"><img src="/dist/images/avatar-agent-small.png" alt="EJ">
+            <div class="msg agent"><strong>EJ</strong><p>Yes, let me check your account details. Could you please provide the customer code for verification?</p></div></div>
+    
+            <div class="small-avatar"><img src="/dist/images/avatar-agent-small.png" alt="EJ">
+                <div class="msg agent"><strong>EJ</strong><p>Yes, let me check your account details. Could you please provide the customer code for verification?</p></div></div>
+      </div>
+    </div>
+
+    <!-- ==================================
+        PANEL: PLAYBOOK TAB CONTENT
+    ================================== -->
+    <div class="panel playbook-panel hidden" id="playbook-panel">
+
+        <!-- Dropdown for selecting Playbook -->
+        <div class="playbook-dropdown">
+        <select>
+            <option>Qualified Lead Playbook</option>
+            <option>Discovery Playbook</option>
+            <option>Sales Follow-up Playbook</option>
+        </select>
+        </div>
+    
+        <!-- Playbook Sections -->
+        <div class="playbook-sections">
+    
+        <!-- Playbook Item 1 -->
+        <div class="playbook-item">
+            <div class="playbook-title">
+            <span class="checkbox checked"></span>
+            <strong>Qualification</strong>
+            <img src="/dist/images/ai-sparkle.svg" alt="AI Assist" class="sparkle-icon">
+            </div>
+            <div class="playbook-summary">
+            <div class="progress-bar"></div>
+            <div class="summary-text">
+                <strong>Summary</strong><br>
+                The agent asked about qualification.<br><br>
+                The customer mentions high energy costs and inefficiencies impacting their operational costs and brand reputation, highlighting an urgency to adapt before the new environmental regulations take effect.
+            </div>
+            </div>
+            <div class="show-more">Show description and questions</div>
+        </div>
+    
+        <!-- Playbook Item 2 -->
+        <div class="playbook-item">
+            <div class="playbook-title">
+            <span class="checkbox checked"></span>
+            <strong>Needs Analysis</strong>
+            <img src="/dist/images/ai-sparkle.svg" alt="AI Assist" class="sparkle-icon">
+            </div>
+            <div class="playbook-summary">
+            <div class="progress-bar"></div>
+            <div class="summary-text">
+                <strong>Summary</strong><br>
+                The agent asked about needs.<br><br>
+                The customer states they are seeking solutions for renewable energy integration with emphasis on scalability and material traceability to meet international standards.
+            </div>
+            </div>
+            <div class="show-more">Show description and questions</div>
+        </div>
+    
+        </div> <!-- End Playbook Sections -->
+    
+    </div>
+  
+
+    <!-- ==================================
+         PANEL: LIVE COACH TAB CONTENT
+         ================================== -->
+    <div class="livecoach-panel panel hidden" id="livecoach-panel">
+        <div class="coach-card">
+            <div class="coach-header">
+              <img src="/dist/images/ai-sparkle.svg" alt="Coach Icon" />
+              <span class="label">Live Coach</span>
+            </div>
+          
+            <div class="coach-body">
+              <h3 class="coach-title">A Single Point of Contact (SPOC) is one</h3>
+              <p class="coach-desc">
+                designated person responsible for coordinating all communication and tasks between teams or departments.
+                This streamlines collaboration, avoids confusion, and ensures accountability throughout the project or customer journey.
+                At communication and tasks between teams or departments.
+              </p>
+            </div>
+          </div>
+          
+          <div class="coach-input">
+            <input type="text" placeholder="New message" />
+            <div class="coach-icons">
+              <img src="/dist/images/icon-image.svg" alt="Attach" />
+              <img src="/dist/images/icon-emoji.svg" alt="Emoji" />
+              <img src="/dist/images/icon-send.svg" alt="Send" />
+            </div>
+          </div>
+          
+     
+    </div>
+
+    <!-- ==================================
+         PANEL: SALESFORCE TAB CONTENT
+         ================================== -->
+<!-- ==================================
+     PANEL: SALESFORCE TAB CONTENT
+     ================================== -->
+     <div class="panel salesforce-panel hidden" id="salesforce-panel">
+        <div class="sf-header">
+          <span class="label">Salesforce</span>
+          <img src="/dist/images/external-link.svg" alt="Open" class="sf-link">
+        </div>
+      
+        <div class="sf-field">
+          <label>Name</label>
+          <div class="sf-value">Maria Reyes</div>
+        </div>
+      
+        <div class="sf-field">
+          <label>Phone</label>
+          <div class="sf-value">+1 613-555-0135</div>
+        </div>
+      
+        <div class="sf-field">
+          <label>Email</label>
+          <div class="sf-value">m.reyes@aerolabs.com</div>
+        </div>
+      
+        <div class="sf-field">
+          <label>Related to</label>
+          <input type="text" placeholder="Support Ticket #2355">
+        </div>
+      
+        <div class="sf-field">
+          <label>Description</label>
+          <textarea rows="4"></textarea>
+        </div>
+      
+        <button class="sf-save">Save activity</button>
+      </div>
+    <!-- ==================================
+         END OF SALESFORCE PANEL
+         ================================== -->      
+
+  </div> <!-- End of call-interface -->
+
+  <!-- ==================================
+       BOTTOM TOOLS (Tabs)
+       ================================== -->
+  <div class="bottom-tools">
+    <button class="tool-btn" id="transcript-btn" data-panel="transcript-panel"><img src="/dist/images/ai_on_tab1.svg" alt="Transcript"><span>Transcript</span></button>
+    <button class="tool-btn" id="playbook-btn" data-panel="playbook-panel"><img src="/dist/images/playbook_tab2.svg" alt="Playbook"><span>Playbook</span></button>
+    <button class="tool-btn" id="livecoach-btn" data-panel="livecoach-panel"><img src="/dist/images/live_coach_tab3.svg" alt="Live coach"><span>Live Coach</span></button>
+    <button class="tool-btn" id="salesforce-btn" data-panel="salesforce-panel"><img src="/dist/images/salesforce_tab4.svg" alt="Salesforce"><span>Salesforce</span></button>
+    <button class="tool-btn" id="more-nav-btn"><img src="/dist/images/more_horizontal_tab5.svg" alt="More"><span>More</span></button>
+  </div>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
