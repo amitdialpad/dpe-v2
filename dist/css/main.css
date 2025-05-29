@@ -25,7 +25,7 @@ body {
   padding: 0;
   min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-image: url("/dist/images/bg.png");
+  background-image: url("../images/bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -68,7 +68,8 @@ body {
       overflow: hidden;
       min-height: 0;
       flex-shrink: 1;
-      flex-grow: 1; }
+      flex-grow: 1;
+      padding-bottom: 60px; }
       .call-interface.transcript-open .transcript-panel .ai-status {
         font-size: 0.9rem;
         color: #aaa;
@@ -85,7 +86,9 @@ body {
           align-items: flex-start;
           gap: 0.5rem; }
         .call-interface.transcript-open .transcript-panel .transcript-content .msg {
-          margin-bottom: 1rem; }
+          margin-bottom: 1rem;
+          color: #dddddd;
+          font-size: 0.9rem; }
           .call-interface.transcript-open .transcript-panel .transcript-content .msg strong {
             display: block;
             margin-bottom: 0.2rem;
@@ -114,7 +117,7 @@ body {
     font-weight: normal;
     color: #fff;
     margin: auto;
-    padding-bottom: 0.5rem; }
+    padding-bottom: 0.2rem; }
   .header .avatar img {
     width: 60px;
     height: 60px;
@@ -191,7 +194,7 @@ body {
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 0.65rem;
+  font-size: 0.8rem;
   /* 👈 smaller font */
   border: none;
   transition: background 0.2s ease; }
@@ -213,7 +216,7 @@ body {
     border-radius: 12px;
     padding: 0.8rem;
     text-align: center;
-    color: #ffffff90;
+    color: #ffffff;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -229,13 +232,38 @@ body {
       width: 32px;
       height: 32px;
       margin-bottom: 0.2rem; }
+    .controls-area .controls-grid .control-btn.muted {
+      background: #D90A45; }
+      .controls-area .controls-grid .control-btn.muted:hover {
+        background: #a80835; }
+      .controls-area .controls-grid .control-btn.muted img {
+        opacity: 0.8; }
+      .controls-area .controls-grid .control-btn.muted span {
+        color: #fff; }
+    .controls-area .controls-grid .control-btn.active {
+      background: #2dff6810 img;
+        background-opacity: 0.8; }
+      .controls-area .controls-grid .control-btn.active span {
+        color: #fff; }
+    .controls-area .controls-grid .control-btn .hold-timer {
+      position: absolute;
+      top: 240px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      display: none;
+      white-space: nowrap; }
 
 .controls-area .end-call-wrapper {
   margin-top: 3rem;
   display: flex;
   justify-content: center; }
   .controls-area .end-call-wrapper .end-call-btn {
-    background: #D90D0D;
+    background: #D90A45;
     color: white;
     border: none;
     padding: 1rem 2rem;
@@ -357,7 +385,7 @@ body {
       height: 24px;
       object-fit: contain; }
   .bottom-tools .tool-btn:hover {
-    background: #333;
+    background: #151515;
     transform: scale(1.05); }
   .bottom-tools .tool-btn.active {
     background: #333;
@@ -389,6 +417,19 @@ body {
   align-items: center;
   justify-content: center; }
 
+.compact-bar .control-btn.muted,
+#compact-bar .control-btn.muted {
+  background: #D90A45 !important; }
+  .compact-bar .control-btn.muted:hover,
+  #compact-bar .control-btn.muted:hover {
+    background: #a80835 !important; }
+  .compact-bar .control-btn.muted img,
+  #compact-bar .control-btn.muted img {
+    opacity: 0.8; }
+  .compact-bar .control-btn.muted span,
+  #compact-bar .control-btn.muted span {
+    color: #ffffff90; }
+
 .compact-bar .end-call {
   background: #e53935;
   color: white;
@@ -410,18 +451,17 @@ body {
   margin: 0.5rem 0; }
   .call-interface.transcript-open .compact-bar .control-btn {
     flex: 1;
-    max-width: 48px;
+    max-width: 56px;
     min-width: 40px;
-    height: 48px;
+    height: 56px;
     background: #1f1f1f0a;
-    border-radius: 10%;
+    border-radius: 20%;
     padding: 0.3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-size: 0.65rem;
+    color: #ffffff90;
     border: none;
     transition: background 0.2s ease;
     cursor: pointer; }
@@ -432,10 +472,10 @@ body {
     .call-interface.transcript-open .compact-bar .control-btn:hover {
       background: #333; }
   .call-interface.transcript-open .compact-bar .end-call {
-    background: #e53935;
+    background: #D90A45;
     color: white;
-    width: 48px;
-    height: 48px;
+    width: auto !important;
+    height: 52px !important;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -451,9 +491,9 @@ body {
   margin-top: 1rem; }
   .call-interface.transcript-open #more-controls .control-btn {
     flex: 1;
-    max-width: 48px;
-    min-width: 40px;
-    height: 48px;
+    max-width: 60px;
+    min-width: 48px;
+    height: 60px;
     background: #1f1f1f0a;
     border-radius: 10%;
     padding: 0.3rem;
@@ -498,7 +538,7 @@ body {
     border-radius: 0.75rem;
     appearance: none;
     /* remove native select arrow */
-    background-image: url("/dist/images/arrow-down.svg");
+    background-image: url("../images/arrow-down.svg");
     /* optional custom arrow */
     background-repeat: no-repeat;
     background-position: right 1rem center;
@@ -535,7 +575,7 @@ body {
     align-items: center;
     justify-content: center; }
     .playbook-title .checkbox.checked::after {
-      content: url("/dist/images/checkmark.svg");
+      content: url("../images/checkmark.svg");
       color: white; }
   .playbook-title .sparkle-icon {
     width: 16px;

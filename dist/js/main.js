@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function resetIconImages() {
-    transcriptImg.src = '/dist/images/ai_on_tab1.svg';
+    transcriptImg.src = 'images/ai_on_tab1.svg';
   }
 
   function openPanel(panel, clickedBtn) {
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentOpenPanel = panel;
 
     if (clickedBtn.id === 'transcript-btn') {
-      transcriptImg.src = '/dist/images/ai_on_tab1_white.svg';
+      transcriptImg.src = 'images/ai_on_tab1_white.svg';
     }
   }
 

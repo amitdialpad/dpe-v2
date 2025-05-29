@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Call Interface</title>
+  <!-- Dialtone Stylesheets -->
+  <!-- <link rel="stylesheet" href="https://unpkg.com/@dialpad/dialtone/dist/css/dialtone-default-theme.min.css"> -->
+  <!-- <link rel="stylesheet" href="https://unpkg.com/@dialpad/dialtone/dist/css/dialtone.min.css"> -->
+  <!-- <link rel="stylesheet" href="css/dialtone-overrides.css"> -->
   <link rel="stylesheet" href="css/main.css">
-  <!---<link rel="stylesheet" href=" https://unpkg.com/@dialpad/dialtone/dist/css/dialtone-default-theme.min.css ">
-  <link rel="stylesheet" href=" https://unpkg.com/@dialpad/dialtone/dist/css/dialtone.min.css "> --> 
-
 </head>
 <body>
 
@@ -16,10 +17,10 @@
        ================================== -->
   <div class="top-actions">
     <button class="icon-btn">
-      <img src="/dist/images/move.svg" alt="Move">
+      <img src="images/move.svg" alt="Move">
     </button>
     <button class="icon-btn">
-      <img src="/dist/images/external-link.svg" alt="Expand">
+      <img src="images/external-link.svg" alt="Expand">
     </button>
   </div>
 
@@ -30,7 +31,7 @@
          ================================== -->
     <div class="header">
       <div class="avatar">
-        <img src="/dist/images/avatar.png" alt="Maria Reyes">
+        <img src="images/avatar.png" alt="Maria Reyes">
       </div>
       <div class="info-block">
         <h2 class="name">Maria Reyes</h2>
@@ -42,7 +43,7 @@
           <span>(919) 123-4567</span>
           <span class="separator">•</span>
           <span>0:12</span>
-          <span class="nqi"><img src="/dist/images/nqi.svg" alt="NQI"></span>
+          <span class="nqi"><img src="images/nqi.svg" alt="NQI"></span>
         </div>
       </div>
     </div>
@@ -54,40 +55,40 @@
 
       <!-- Default 3x3 Grid (landing view) -->
       <div class="controls-grid" id="default-grid">
-        <button class="control-btn"><img src="/dist/images/mic.svg" alt="Mute"><span>Mute</span></button>
-        <button class="control-btn"><img src="/dist/images/hold.svg" alt="Hold"><span>Hold</span></button>
-        <button class="control-btn"><img src="/dist/images/transfer.svg" alt="Transfer"><span>Transfer</span></button>
-        <button class="control-btn"><img src="/dist/images/record.svg" alt="Record"><span>Record</span></button>
-        <button class="control-btn"><img src="/dist/images/keypad.svg" alt="Keypad"><span>Keypad</span></button>
-        <button class="control-btn"><img src="/dist/images/add.svg" alt="Add"><span>Add</span></button>
-        <button class="control-btn"><img src="/dist/images/share.svg" alt="Share"><span>Share</span></button>
-        <button class="control-btn"><img src="/dist/images/park.svg" alt="Park"><span>Park</span></button>
-        <button class="control-btn"><img src="/dist/images/vm.svg" alt="VM"><span>VM</span></button>
+        <button class="control-btn" data-control="mic"><img src="images/mic.svg" alt="Mute"><span>Mute</span></button>
+        <button class="control-btn" data-control="hold"><img src="images/hold.svg" alt="Hold"><span>Hold</span></button>
+        <button class="control-btn" data-control="transfer"><img src="images/transfer.svg" alt="Transfer"><span>Transfer</span></button>
+        <button class="control-btn" data-control="record"><img src="images/record.svg" alt="Record"><span>Record</span></button>
+        <button class="control-btn" data-control="keypad"><img src="images/keypad.svg" alt="Keypad"><span>Keypad</span></button>
+        <button class="control-btn" data-control="add"><img src="images/add.svg" alt="Add"><span>Add</span></button>
+        <button class="control-btn" data-control="share"><img src="images/share.svg" alt="Share"><span>Share</span></button>
+        <button class="control-btn" data-control="park"><img src="images/park.svg" alt="Park"><span>Park</span></button>
+        <button class="control-btn" data-control="vm"><img src="images/vm.svg" alt="VM"><span>VM</span></button>
       </div>
 
       <!-- Compact Horizontal Controls (transcript open mode) -->
       <div class="compact-bar hidden" id="compact-bar">
-        <button class="control-btn"><img src="/dist/images/mic.svg" alt="Mute"><span>Mute</span></button>
-        <button class="control-btn"><img src="/dist/images/hold.svg" alt="Hold"><span>Hold</span></button>
-        <button class="control-btn"><img src="/dist/images/transfer.svg" alt="Transfer"><span>Transfer</span></button>
-        <button class="control-btn"><img src="/dist/images/record.svg" alt="Record"><span>Record</span></button>
-        <button class="control-btn" id="more-btn"><img src="/dist/images/more-horizontal.svg" alt="More"><span>More</span></button>
-        <button class="control-btn end-call"><span><img src="/dist/images/end-call-left.svg" alt="End Call Icon"></span></button>
+        <button class="control-btn" data-control="mic"><img src="images/mic.svg" alt="Mute"><span>Mute</span></button>
+        <button class="control-btn" data-control="hold"><img src="images/hold.svg" alt="Hold"><span>Hold</span></button>
+        <button class="control-btn" data-control="transfer"><img src="images/transfer.svg" alt="Transfer"><span>Transfer</span></button>
+        <button class="control-btn" data-control="record"><img src="images/record.svg" alt="Record"><span>Record</span></button>
+        <button class="control-btn" id="more-btn" data-control="more"><img src="images/more-horizontal.svg" alt="More"><span>More</span></button>
+        <button class="control-btn end-call" data-control="end-call"><span><img src="images/end-call-left.svg" alt="End Call Icon"></span></button>
       </div>
 
       <!-- More Controls (revealed when 'More' clicked) -->
       <div class="compact-more hidden" id="more-controls">
-        <button class="control-btn"><img src="/dist/images/keypad.svg" alt="Keypad"><span>Keypad</span></button>
-        <button class="control-btn"><img src="/dist/images/add.svg" alt="Add"><span>Add</span></button>
-        <button class="control-btn"><img src="/dist/images/share.svg" alt="Share"><span>Share</span></button>
-        <button class="control-btn"><img src="/dist/images/park.svg" alt="Park"><span>Park</span></button>
-        <button class="control-btn"><img src="/dist/images/vm.svg" alt="VM"><span>VM</span></button>
+        <button class="control-btn" data-control="keypad"><img src="images/keypad.svg" alt="Keypad"><span>Keypad</span></button>
+        <button class="control-btn" data-control="add"><img src="images/add.svg" alt="Add"><span>Add</span></button>
+        <button class="control-btn" data-control="share"><img src="images/share.svg" alt="Share"><span>Share</span></button>
+        <button class="control-btn" data-control="park"><img src="images/park.svg" alt="Park"><span>Park</span></button>
+        <button class="control-btn" data-control="vm"><img src="images/vm.svg" alt="VM"><span>VM</span></button>
       </div>
 
       <!-- Big End Call Button (landing view only) -->
       <div class="end-call-wrapper" id="default-end-call">
         <button class="end-call-btn">
-          <img src="/dist/images/end-call-left.svg" alt="End Call Icon">
+          <img src="images/end-call-left.svg" alt="End Call Icon">
           <span>End Call</span>
         </button>
       </div>
@@ -106,25 +107,25 @@
         </label>         
       </div>
       <div class="transcript-content">
-        <div class="small-avatar"><img src="/dist/images/avatar-maria-small.png" alt="Maria Reyes">
+        <div class="small-avatar"><img src="images/avatar-maria-small.png" alt="Maria Reyes">
         <div class="msg user"><strong>Maria Reyes</strong><p>Hi, I’d like to inquire about upgrading my credit card account.</p></div></div>
 
-        <div class="small-avatar"><img src="/dist/images/avatar-agent-small.png" alt="EJ">
+        <div class="small-avatar"><img src="images/avatar-agent-small.png" alt="EJ">
         <div class="msg agent"><strong>EJ</strong><p>Sure, Maria! I’d be happy to assist. Can you tell me which credit card you currently have?</p></div></div>
 
-        <div class="small-avatar"><img src="/dist/images/avatar-maria-small.png" alt="Maria Reyes">
+        <div class="small-avatar"><img src="images/avatar-maria-small.png" alt="Maria Reyes">
         <div class="msg user"><strong>Maria Reyes</strong><p>I have the Silver Rewards Card, but I was looking at the Platinum one...</p></div></div>
 
-        <div class="small-avatar"><img src="/dist/images/avatar-agent-small.png" alt="EJ">
+        <div class="small-avatar"><img src="images/avatar-agent-small.png" alt="EJ">
         <div class="msg agent"><strong>EJ</strong><p>Yes, let me check your account details. Could you please provide the customer code for verification?</p></div></div>
 
-        <div class="small-avatar"><img src="/dist/images/avatar-agent-small.png" alt="EJ">
+        <div class="small-avatar"><img src="images/avatar-agent-small.png" alt="EJ">
             <div class="msg agent"><strong>EJ</strong><p>Yes, let me check your account details. Could you please provide the customer code for verification?</p></div></div>
 
-        <div class="small-avatar"><img src="/dist/images/avatar-agent-small.png" alt="EJ">
+        <div class="small-avatar"><img src="images/avatar-agent-small.png" alt="EJ">
             <div class="msg agent"><strong>EJ</strong><p>Yes, let me check your account details. Could you please provide the customer code for verification?</p></div></div>
     
-            <div class="small-avatar"><img src="/dist/images/avatar-agent-small.png" alt="EJ">
+            <div class="small-avatar"><img src="images/avatar-agent-small.png" alt="EJ">
                 <div class="msg agent"><strong>EJ</strong><p>Yes, let me check your account details. Could you please provide the customer code for verification?</p></div></div>
       </div>
     </div>
@@ -151,7 +152,7 @@
             <div class="playbook-title">
             <span class="checkbox checked"></span>
             <strong>Qualification</strong>
-            <img src="/dist/images/ai-sparkle.svg" alt="AI Assist" class="sparkle-icon">
+            <img src="images/ai-sparkle.svg" alt="AI Assist" class="sparkle-icon">
             </div>
             <div class="playbook-summary">
             <div class="progress-bar"></div>
@@ -169,7 +170,7 @@
             <div class="playbook-title">
             <span class="checkbox checked"></span>
             <strong>Needs Analysis</strong>
-            <img src="/dist/images/ai-sparkle.svg" alt="AI Assist" class="sparkle-icon">
+            <img src="images/ai-sparkle.svg" alt="AI Assist" class="sparkle-icon">
             </div>
             <div class="playbook-summary">
             <div class="progress-bar"></div>
@@ -193,7 +194,7 @@
     <div class="livecoach-panel panel hidden" id="livecoach-panel">
         <div class="coach-card">
             <div class="coach-header">
-              <img src="/dist/images/ai-sparkle.svg" alt="Coach Icon" />
+              <img src="images/ai-sparkle.svg" alt="Coach Icon" />
               <span class="label">Live Coach</span>
             </div>
           
@@ -210,9 +211,9 @@
           <div class="coach-input">
             <input type="text" placeholder="New message" />
             <div class="coach-icons">
-              <img src="/dist/images/icon-image.svg" alt="Attach" />
-              <img src="/dist/images/icon-emoji.svg" alt="Emoji" />
-              <img src="/dist/images/icon-send.svg" alt="Send" />
+              <img src="images/icon-image.svg" alt="Attach" />
+              <img src="images/icon-emoji.svg" alt="Emoji" />
+              <img src="images/icon-send.svg" alt="Send" />
             </div>
           </div>
           
@@ -228,7 +229,7 @@
      <div class="panel salesforce-panel hidden" id="salesforce-panel">
         <div class="sf-header">
           <span class="label">Salesforce</span>
-          <img src="/dist/images/external-link.svg" alt="Open" class="sf-link">
+          <img src="images/external-link.svg" alt="Open" class="sf-link">
         </div>
       
         <div class="sf-field">
@@ -268,13 +269,15 @@
        BOTTOM TOOLS (Tabs)
        ================================== -->
   <div class="bottom-tools">
-    <button class="tool-btn" id="transcript-btn" data-panel="transcript-panel"><img src="/dist/images/ai_on_tab1.svg" alt="Transcript"><span>Transcript</span></button>
-    <button class="tool-btn" id="playbook-btn" data-panel="playbook-panel"><img src="/dist/images/playbook_tab2.svg" alt="Playbook"><span>Playbook</span></button>
-    <button class="tool-btn" id="livecoach-btn" data-panel="livecoach-panel"><img src="/dist/images/live_coach_tab3.svg" alt="Live coach"><span>Live Coach</span></button>
-    <button class="tool-btn" id="salesforce-btn" data-panel="salesforce-panel"><img src="/dist/images/salesforce_tab4.svg" alt="Salesforce"><span>Salesforce</span></button>
-    <button class="tool-btn" id="more-nav-btn"><img src="/dist/images/more_horizontal_tab5.svg" alt="More"><span>More</span></button>
+    <button class="tool-btn" id="transcript-btn" data-panel="transcript-panel"><img src="images/ai_on_tab1.svg" alt="Transcript"><span>Transcript</span></button>
+    <button class="tool-btn" id="playbook-btn" data-panel="playbook-panel"><img src="images/playbook_tab2.svg" alt="Playbook"><span>Playbook</span></button>
+    <button class="tool-btn" id="livecoach-btn" data-panel="livecoach-panel"><img src="images/live_coach_tab3.svg" alt="Live coach"><span>Live Coach</span></button>
+    <button class="tool-btn" id="salesforce-btn" data-panel="salesforce-panel"><img src="images/salesforce_tab4.svg" alt="Salesforce"><span>Salesforce</span></button>
+    <button class="tool-btn" id="more-nav-btn"><img src="images/more_horizontal_tab5.svg" alt="More"><span>More</span></button>
   </div>
 
   <script src="js/main.js"></script>
+  <script src="js/call-control.js"></script>
+  <script src="js/transfer-flow.js"></script>
 </body>
 </html>

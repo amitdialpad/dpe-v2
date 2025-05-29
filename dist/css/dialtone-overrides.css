@@ -1,0 +1,36 @@
+/* Force the base font size to 10px with higher specificity */
+html {
+    font-size: 9px !important;
+  }
+  
+  /* Override body font size */
+  body {
+    font-size: 1.6rem !important; /* 16px with 10px base */
+  }
+  
+  /* Override common text elements */
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 1.6rem !important;
+  }
+  
+  /* Override button styles */
+  button, .d-btn {
+    padding: 0.8rem 1.6rem !important;
+    font-size: 1.4rem !important; /* 14px with 10px base */
+  }
+  
+  /* Override common Dialtone text classes */
+  .d-body1, .d-body2, .d-caption {
+    font-size: 1.4rem !important;
+  }
+  
+  /* Override input fields */
+  input, textarea, select {
+    font-size: 1.4rem !important;
+    padding: 0.8rem !important;
+  }
+  
+  /* Override any remaining small text */
+  * {
+    font-size: inherit !important;
+  }

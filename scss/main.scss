@@ -6,8 +6,8 @@ $text-gray: #9CA3AF;
 $btn-bg: #27272A;
 $btn-hover: #3F3F46;
 $pink: #EC4899;
-$green: #22C55E;
-$red: #DC2626;
+$green: #AEFB3C;
+$red: #D90A45;
 
 // Base styles
 .top-actions {
@@ -44,7 +44,7 @@ body {
     padding: 0;
     min-height: 100vh;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-image: url('/dist/images/bg.png');
+    background-image: url('../images/bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -100,6 +100,7 @@ body {
         min-height: 0; 
         flex-shrink: 1;
         flex-grow: 1;
+        padding-bottom: 60px;
   
         .ai-status {
           font-size: 0.9rem;
@@ -123,6 +124,8 @@ body {
   
           .msg {
             margin-bottom: 1rem;
+            color: #dddddd;
+            font-size: 0.9rem;
   
             strong {
               display: block;
@@ -165,7 +168,7 @@ body {
         font-weight: normal;
         color: #fff;
         margin: auto;
-        padding-bottom: 0.5rem;
+        padding-bottom: 0.2rem;
 
     }
   
@@ -263,7 +266,7 @@ body {
     align-items: center;
     justify-content: center;
     color: #fff;
-    font-size: 0.65rem; /* 👈 smaller font */
+    font-size: 0.8rem; /* 👈 smaller font */
     border: none;
     transition: background 0.2s ease;
   
@@ -292,7 +295,7 @@ body {
           border-radius: 12px;
           padding: 0.8rem;
           text-align: center;
-          color: #ffffff90;
+          color: #ffffff;
           width: 100%;
           display: flex;
           flex-direction: column;
@@ -312,6 +315,49 @@ body {
             margin-bottom: 0.2rem;
           }
 
+          &.muted {
+            background: $red;
+
+            &:hover {
+              background: darken($red, 10%);
+            }
+            
+            img {
+              opacity: 0.8;
+            }
+            
+            span {
+              color: #fff;
+            }
+          }
+
+          &.active {
+            background: #2dff6810 // For hold active state
+            
+            img {
+              opacity: 0.8;
+            }
+            
+            span {
+              color: #fff;
+            }
+          }
+          
+          // ADD THIS HERE TOO:
+          .hold-timer {
+            position: absolute;
+            top: 240px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            display: none;
+            white-space: nowrap;
+          }
+
           
         }
        
@@ -326,7 +372,7 @@ body {
         justify-content: center;
       
         .end-call-btn {
-          background: #D90D0D;
+          background: #D90A45;
           color: white;
           border: none;
           padding: 1rem 2rem;
@@ -471,7 +517,7 @@ body {
     }
   
     .tool-btn:hover {
-        background: #333;
+        background: #151515;
         transform: scale(1.05);
     }
 
@@ -512,6 +558,28 @@ body {
     align-items: center;
     justify-content: center;
   }
+
+  .compact-bar .control-btn.muted,
+  #compact-bar .control-btn.muted {
+  background: $red !important;
+
+  &:hover {
+    background: darken($red, 10%) !important;
+  }
+
+  
+  img {
+    opacity: 0.8;
+  }
+  
+  span {
+    color: #ffffff90;
+  }
+
+
+
+    
+}
   
   .compact-bar .end-call {
     background: #e53935;
@@ -541,18 +609,17 @@ body {
   
       .control-btn {
         flex: 1;
-        max-width: 48px;
+        max-width: 56px;
         min-width: 40px;
-        height: 48px;
+        height: 56px;
         background: #1f1f1f0a;
-        border-radius: 10%;
+        border-radius: 20%;
         padding: 0.3rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: #fff;
-        font-size: 0.65rem;
+        color: #ffffff90;
         border: none;
         transition: background 0.2s ease;
         cursor: pointer;
@@ -569,10 +636,10 @@ body {
       }
   
       .end-call {
-        background: #e53935;
+        background: $red;
         color: white;
-        width: 48px;
-        height: 48px;
+        width: auto !important;
+        height: 52px !important;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -592,9 +659,9 @@ body {
   
     .control-btn {
         flex: 1;
-        max-width: 48px;
-        min-width: 40px;
-        height: 48px;
+        max-width: 60px;
+        min-width: 48px;
+        height: 60px;
         background: #1f1f1f0a;
         border-radius: 10%;
         padding: 0.3rem;
@@ -652,7 +719,7 @@ body {
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 0.75rem;
       appearance: none; /* remove native select arrow */
-      background-image: url('/dist/images/arrow-down.svg'); /* optional custom arrow */
+      background-image: url('../images/arrow-down.svg'); /* optional custom arrow */
       background-repeat: no-repeat;
       background-position: right 1rem center;
       background-size: 1rem;
@@ -699,7 +766,7 @@ body {
       justify-content: center;
   
       &.checked::after {
-        content: url('/dist/images/checkmark.svg');
+        content: url('../images/checkmark.svg');
         color: white;
       }
     }
