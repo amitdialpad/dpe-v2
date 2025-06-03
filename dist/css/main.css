@@ -226,10 +226,26 @@ body {
     row-gap: .5rem;
     max-width: 100px;
     cursor: pointer; }
-    .controls-area .controls-grid .control-btn.active span {
-      color: #fff !important; }
-    .controls-area .controls-grid .control-btn[data-control="hold"].active span {
-      color: #AEFB3C !important; }
+    .controls-area .controls-grid .control-btn.recording {
+      background: rgba(45, 255, 104, 0.1); }
+      .controls-area .controls-grid .control-btn.recording span {
+        color: #AEFB3C !important; }
+      .controls-area .controls-grid .control-btn.recording:hover {
+        background: rgba(45, 255, 104, 0.2); }
+    .controls-area .controls-grid .control-btn.active:not([data-control="hold"]) {
+      background: #2dff6810; }
+      .controls-area .controls-grid .control-btn.active:not([data-control="hold"]) img {
+        opacity: 0.8; }
+      .controls-area .controls-grid .control-btn.active:not([data-control="hold"]) span {
+        color: #fff; }
+    .controls-area .controls-grid .control-btn[data-control="hold"].active {
+      background: rgba(45, 255, 104, 0.1) !important; }
+      .controls-area .controls-grid .control-btn[data-control="hold"].active img {
+        opacity: 0.8; }
+      .controls-area .controls-grid .control-btn[data-control="hold"].active span {
+        color: #AEFB3C !important; }
+      .controls-area .controls-grid .control-btn[data-control="hold"].active:hover {
+        background: rgba(45, 255, 104, 0.2) !important; }
     .controls-area .controls-grid .control-btn:hover {
       background: #333; }
     .controls-area .controls-grid .control-btn img {
@@ -253,14 +269,22 @@ body {
       position: absolute;
       top: 240px;
       left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.9);
+      transform: translateX(-50%) translateY(-10px);
+      background: rgba(255, 255, 255, 0.95);
       color: #000000;
-      padding: 2px 6px;
-      border-radius: 8px;
+      padding: 4px 8px;
+      border-radius: 12px;
       font-size: 0.7rem;
+      font-weight: 600;
       display: none;
-      white-space: nowrap; }
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: all 0.3s ease; }
+      .controls-area .controls-grid .control-btn .hold-timer.show {
+        display: block;
+        opacity: 1;
+        transform: translateX(-50%) translateY(0); }
 
 .controls-area .end-call-wrapper {
   margin-top: 3rem;
@@ -289,16 +313,24 @@ body {
 
 .compact-bar .control-btn .hold-timer {
   top: 136px;
-  background: rgba(255, 255, 255, 0.9);
+  left: 115px;
+  background: rgba(255, 255, 255, 0.95);
   color: #000000;
-  padding: 2px 6px;
-  border-radius: 8px;
+  padding: 4px 8px;
+  border-radius: 12px;
   font-size: 0.7rem;
+  font-weight: 600;
   display: none;
   white-space: nowrap;
-  left: 115px;
-  transform: translateX(-50%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateX(-50%) translateY(-10px);
+  transition: all 0.3s ease;
   position: absolute; }
+  .compact-bar .control-btn .hold-timer.show {
+    display: block;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0); }
 
 .transcript-panel {
   background: #1c1c1c75;
@@ -433,6 +465,24 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center; }
+  .compact-bar .control-btn.recording,
+  .compact-more .control-btn.recording {
+    background: rgba(45, 255, 104, 0.1); }
+    .compact-bar .control-btn.recording span,
+    .compact-more .control-btn.recording span {
+      color: #AEFB3C !important; }
+    .compact-bar .control-btn.recording:hover,
+    .compact-more .control-btn.recording:hover {
+      background: rgba(45, 255, 104, 0.2); }
+  .compact-bar .control-btn[data-control="hold"].active,
+  .compact-more .control-btn[data-control="hold"].active {
+    background: rgba(45, 255, 104, 0.1); }
+    .compact-bar .control-btn[data-control="hold"].active span,
+    .compact-more .control-btn[data-control="hold"].active span {
+      color: #AEFB3C !important; }
+    .compact-bar .control-btn[data-control="hold"].active:hover,
+    .compact-more .control-btn[data-control="hold"].active:hover {
+      background: rgba(45, 255, 104, 0.2); }
 
 .compact-bar .control-btn.muted,
 #compact-bar .control-btn.muted {
@@ -482,8 +532,18 @@ body {
     border: none;
     transition: background 0.2s ease;
     cursor: pointer; }
-    .call-interface.transcript-open .compact-bar .control-btn[data-control="hold"].active span {
-      color: #AEFB3C !important; }
+    .call-interface.transcript-open .compact-bar .control-btn.recording {
+      background: rgba(45, 255, 104, 0.1); }
+      .call-interface.transcript-open .compact-bar .control-btn.recording span {
+        color: #AEFB3C !important; }
+      .call-interface.transcript-open .compact-bar .control-btn.recording:hover {
+        background: rgba(45, 255, 104, 0.2); }
+    .call-interface.transcript-open .compact-bar .control-btn[data-control="hold"].active {
+      background: rgba(45, 255, 104, 0.1); }
+      .call-interface.transcript-open .compact-bar .control-btn[data-control="hold"].active span {
+        color: #AEFB3C !important; }
+      .call-interface.transcript-open .compact-bar .control-btn[data-control="hold"].active:hover {
+        background: rgba(45, 255, 104, 0.2); }
     .call-interface.transcript-open .compact-bar .control-btn img {
       width: 20px;
       height: 20px;
@@ -1085,3 +1145,87 @@ body {
         .complete-transfer-modal .transfer-actions .transfer-secondary-actions .transfer-secondary-btn:hover {
           background: rgba(255, 255, 255, 0.1);
           border-color: #c7c7c7; }
+
+.transfer-success-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11000;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .transfer-success-modal.hidden {
+    display: none; }
+  .transfer-success-modal .success-modal-content {
+    position: relative;
+    background: #1A1A1A;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    max-width: 400px;
+    z-index: 11001; }
+  .transfer-success-modal .success-animation {
+    margin-bottom: 2rem; }
+    .transfer-success-modal .success-animation .checkmark-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #34C759;
+      margin: 0 auto;
+      position: relative;
+      animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+      .transfer-success-modal .success-animation .checkmark-circle .checkmark {
+        width: 24px;
+        height: 12px;
+        border: 3px solid white;
+        border-top: none;
+        border-right: none;
+        transform: rotate(-45deg);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -8px;
+        margin-left: -12px;
+        opacity: 0;
+        animation: checkmarkDraw 0.3s ease-out 0.6s forwards; }
+  .transfer-success-modal .success-message h2 {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    opacity: 0;
+    animation: fadeInUp 0.4s ease-out 0.9s forwards; }
+  .transfer-success-modal .success-message p {
+    color: #ccc;
+    font-size: 1rem;
+    margin: 0;
+    opacity: 0;
+    animation: fadeInUp 0.4s ease-out 1.1s forwards; }
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+    opacity: 0; }
+  50% {
+    opacity: 1; }
+  100% {
+    transform: scale(1);
+    opacity: 1; } }
+
+@keyframes checkmarkDraw {
+  0% {
+    opacity: 0;
+    transform: rotate(-45deg) scale(0); }
+  100% {
+    opacity: 1;
+    transform: rotate(-45deg) scale(1); } }
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); }
+  100% {
+    opacity: 1;
+    transform: translateY(0); } }

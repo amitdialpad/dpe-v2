@@ -413,27 +413,101 @@ class TransferFlow {
   }
 
   executeTransfer(type) {
-    const contactName = document.getElementById('to-name')?.textContent || 'Contact';
-    
-    switch(type) {
-      case 'now':
-        console.log(`Executing immediate transfer to ${contactName}`);
-        alert(`Transferring call to ${contactName} now...`);
-        break;
-      case 'ask':
-        console.log(`Asking ${contactName} first before transfer`);
-        alert(`Calling ${contactName} to ask before transfer...`);
-        break;
-      case 'vm':
-        console.log(`Transferring to ${contactName}'s voicemail`);
-        alert(`Transferring to ${contactName}'s voicemail...`);
-        break;
-    }
-    
-    // Close modal after action
-    this.hideCompleteTransfer();
-    this.hideModal();
+  // Get the actual names from the interface
+  const contactName = document.getElementById('to-name')?.textContent || 'Contact';
+  const fromName = document.querySelector('.header .name')?.textContent || 'Emily Johnson'; // Get from main header
+  
+  switch(type) {
+    case 'now':
+      console.log(`Executing immediate transfer to ${contactName}`);
+      this.showTransferSuccess(fromName, contactName);
+      break;
+    case 'ask':
+      console.log(`Asking ${contactName} first before transfer`);
+      alert(`Calling ${contactName} to ask before transfer...`);
+      this.hideCompleteTransfer();
+      this.hideModal();
+      break;
+    case 'vm':
+      console.log(`Transferring to ${contactName}'s voicemail`);
+      alert(`Transferring to ${contactName}'s voicemail...`);
+      this.hideCompleteTransfer();
+      this.hideModal();
+      break;
   }
+}
+showTransferSuccess(fromName, toName) {
+  // Hide complete transfer modal first
+  this.hideCompleteTransfer();
+  this.hideModal();
+  
+  // Hide all call-related UI elements immediately
+  this.hideCallUI();
+  
+  // Update success message with actual names
+  const successText = document.getElementById('success-text');
+  if (successText) {
+    successText.textContent = `Transferred ${fromName} to ${toName}`;
+  }
+  
+  // Show success modal with animation
+  const successModal = document.getElementById('transfer-success-modal');
+  if (successModal) {
+    successModal.classList.remove('hidden');
+    
+    // Close app after 5 seconds
+    setTimeout(() => {
+      this.closeApp();
+    }, 5000);
+  }
+}
+
+hideCallUI() {
+  // Hide end call buttons
+  const endCallWrapper = document.getElementById('default-end-call');
+  if (endCallWrapper) endCallWrapper.style.display = 'none';
+  
+  const compactBar = document.getElementById('compact-bar');
+  if (compactBar) compactBar.style.display = 'none';
+  
+  // Hide bottom fixed bar
+  const bottomTools = document.querySelector('.bottom-tools');
+  if (bottomTools) bottomTools.style.display = 'none';
+  
+  // Hide call timer and NQI from header
+  const callInfo = document.querySelector('.call-info');
+  if (callInfo) callInfo.style.display = 'none';
+  
+  // Hide control buttons
+  const controlsArea = document.querySelector('.controls-area');
+  if (controlsArea) controlsArea.style.display = 'none';
+  
+  // Hide any open panels (transcript, etc.)
+  const panels = document.querySelectorAll('.panel');
+  panels.forEach(panel => panel.style.display = 'none');
+  
+  console.log('Hidden all call UI elements - call transferred');
+}
+
+closeApp() {
+  console.log('Closing call interface app...');
+  
+  // Fade out the entire app
+  document.body.style.transition = 'opacity 0.5s ease-out';
+  document.body.style.opacity = '0';
+  
+  // Close window after fade
+  setTimeout(() => {
+    // In a real app, this would close the window or redirect
+    // For demo purposes, we'll just reload or show a message
+    if (window.opener) {
+      window.close(); // Close if opened as popup
+    } else {
+      // Or redirect/reload for demo
+      window.location.reload();
+    }
+  }, 500);
+}
 
   bindEvents() {
     // Close button
@@ -492,3 +566,4 @@ class TransferFlow {
     });
   }
 }
+

@@ -18,84 +18,81 @@ class CallControls {
     this.init();
   }
 
-  // Add these methods to your CallControls class
-startHoldTimer() {
-  this.holdStartTime = Date.now();
-  this.holdTimerInterval = setInterval(() => {
-    this.updateHoldTimer();
-  }, 1000);
-  
-  // Show timer on all hold buttons
-  this.showHoldTimer();
-}
-
-stopHoldTimer() {
-  if (this.holdTimerInterval) {
-    clearInterval(this.holdTimerInterval);
-    this.holdTimerInterval = null;
-  }
-  
-  // Hide timer on all hold buttons
-  this.hideHoldTimer();
-}
-
-updateHoldTimer() {
-  const elapsed = Math.floor((Date.now() - this.holdStartTime) / 1000);
-  const minutes = Math.floor(elapsed / 60);
-  const seconds = elapsed % 60;
-  const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  
-  // Update timer display on all hold buttons
-  const holdButtons = document.querySelectorAll('[data-control="hold"]');
-  holdButtons.forEach(button => {
-    const timer = button.querySelector('.hold-timer');
-    if (timer) {
-      timer.textContent = timeString;
-    }
-  });
-}
-
-showHoldTimer() {
-  const holdButtons = document.querySelectorAll('[data-control="hold"]');
-  holdButtons.forEach(button => {
-    // Create timer element if it doesn't exist
-    let timer = button.querySelector('.hold-timer');
-    if (!timer) {
-      timer = document.createElement('div');
-      timer.className = 'hold-timer';
-      button.appendChild(timer);
-    }
-    timer.style.display = 'block';
-    timer.textContent = '0:00';
-  });
-}
-
-hideHoldTimer() {
-  const holdButtons = document.querySelectorAll('[data-control="hold"]');
-  holdButtons.forEach(button => {
-    const timer = button.querySelector('.hold-timer');
-    if (timer) {
-      timer.style.display = 'none';
-    }
-  });
-}
-
   init() {
     this.bindEvents();
     this.updateUI();
-    console.log('Call Controls initialized');
   }
 
-  // Control Methods
-  toggleMic() {
+  bindEvents() {
+    // Control button clicks
+    const buttons = document.querySelectorAll('.control-btn');
+    buttons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const control = button.dataset.control;
+        
+        switch (control) {
+          case 'mic':
+            this.toggleMute();
+            break;
+          case 'hold':
+            this.toggleHold();
+            break;
+          case 'transfer':
+            this.handleTransfer();
+            break;
+          case 'record':
+            this.toggleRecord();
+            break;
+          case 'keypad':
+            this.handleKeypad();
+            break;
+          case 'add':
+            this.handleAdd();
+            break;
+          case 'share':
+            this.handleShare();
+            break;
+          case 'park':
+            this.handlePark();
+            break;
+          case 'vm':
+            this.handleVM();
+            break;
+          case 'more':
+            this.handleMore();
+            break;
+          case 'end-call':
+            this.handleEndCall();
+            break;
+        }
+      });
+    });
+
+    // More button specific logic
+    const moreBtn = document.getElementById('more-btn');
+    const moreControls = document.getElementById('more-controls');
+    
+    if (moreBtn && moreControls) {
+      moreBtn.addEventListener('click', () => {
+        const isOpen = !moreControls.classList.contains('hidden');
+        if (isOpen) {
+          moreControls.classList.add('hidden');
+        } else {
+          moreControls.classList.remove('hidden');
+        }
+      });
+    }
+  }
+
+  toggleMute() {
     this.state.mic.muted = !this.state.mic.muted;
     this.updateUI();
-    console.log(`Mic ${this.state.mic.muted ? 'muted' : 'unmuted'}`);
+    console.log(`Microphone ${this.state.mic.muted ? 'muted' : 'unmuted'}`);
     
-    // Update ALL mic buttons (both 3x3 grid AND compact controls)
-    const micButtons = document.querySelectorAll('[data-control="mic"]');
-    micButtons.forEach(button => {
-      // Update CSS classes for red background
+    // Update ALL mute buttons (both 3x3 grid AND compact controls)
+    const muteButtons = document.querySelectorAll('[data-control="mic"]');
+    muteButtons.forEach(button => {
       if (this.state.mic.muted) {
         button.classList.add('muted');
       } else {
@@ -121,57 +118,151 @@ hideHoldTimer() {
       }
     });
     
-    this.onMicToggle(this.state.mic.muted);
+    this.onMuteToggle(this.state.mic.muted);
   }
+
   toggleHold() {
-  this.state.hold.active = !this.state.hold.active;
-  this.updateUI();
-  console.log(`Hold ${this.state.hold.active ? 'activated' : 'deactivated'}`);
-  
-  // Update ALL hold buttons (both 3x3 grid AND compact controls)
-  const holdButtons = document.querySelectorAll('[data-control="hold"]');
-  holdButtons.forEach(button => {
-    // Update CSS classes for active state
-    if (this.state.hold.active) {
-      button.classList.add('active');
-    } else {
-      button.classList.remove('active');
-    }
+    this.state.hold.active = !this.state.hold.active;
+    this.updateUI();
+    console.log(`Call ${this.state.hold.active ? 'held' : 'resumed'}`);
     
-    // Update icon
-    const img = button.querySelector('img');
-    if (img) {
+    // Update ALL hold buttons (both 3x3 grid AND compact controls)
+    const holdButtons = document.querySelectorAll('[data-control="hold"]');
+    holdButtons.forEach(button => {
+      // Update CSS classes for hold state
       if (this.state.hold.active) {
-        img.src = 'images/resume.svg'; // Path to your resume icon
-        img.alt = 'Resume';
+        button.classList.add('active');
       } else {
-        img.src = 'images/hold.svg'; // Path to your hold icon
-        img.alt = 'Hold';
+        button.classList.remove('active');
       }
+      
+      // Update icon
+      const img = button.querySelector('img');
+      if (img) {
+        if (this.state.hold.active) {
+          img.src = 'images/resume.svg';
+          img.alt = 'Resume';
+        } else {
+          img.src = 'images/hold.svg';
+          img.alt = 'Hold';
+        }
+      }
+      
+      // Update text
+      const span = button.querySelector('span');
+      if (span) {
+        span.textContent = this.state.hold.active ? 'Resume' : 'Hold';
+      }
+    });
+    
+    // Handle hold timer
+    if (this.state.hold.active) {
+      this.startHoldTimer();
+    } else {
+      this.stopHoldTimer();
     }
     
-    // Update text
-    const span = button.querySelector('span');
-    if (span) {
-      span.textContent = this.state.hold.active ? 'Resume' : 'Hold';
-    }
-  });
-  
-  // Handle hold timer
-  if (this.state.hold.active) {
-    this.startHoldTimer();
-  } else {
-    this.stopHoldTimer();
+    this.onHoldToggle(this.state.hold.active);
   }
+
+startHoldTimer() {
+  this.holdStartTime = Date.now();
   
-  this.onHoldToggle(this.state.hold.active);
+  // Show the timer immediately with 0:00
+  this.updateHoldTimer(); // Add this line - shows "0:00" immediately
+  
+  this.holdTimerInterval = setInterval(() => {
+    this.updateHoldTimer();
+  }, 1000);
+  
+  this.showHoldTimer();
 }
+
+  stopHoldTimer() {
+    if (this.holdTimerInterval) {
+      clearInterval(this.holdTimerInterval);
+      this.holdTimerInterval = null;
+    }
+    
+    this.hideHoldTimer();
+    
+    // Reset timer display after hiding
+    setTimeout(() => {
+      const holdTimers = document.querySelectorAll('.hold-timer');
+      holdTimers.forEach(timer => {
+        timer.textContent = '0:00';
+      });
+    }, 300);
+  }
+
+  updateHoldTimer() {
+    const elapsed = Date.now() - this.holdStartTime;
+    const minutes = Math.floor(elapsed / 60000);
+    const seconds = Math.floor((elapsed % 60000) / 1000);
+    const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    
+    const holdTimers = document.querySelectorAll('.hold-timer');
+    holdTimers.forEach(timer => {
+      timer.textContent = timeString;
+    });
+  }
+
+  showHoldTimer() {
+    const holdTimers = document.querySelectorAll('.hold-timer');
+    holdTimers.forEach(timer => {
+      timer.style.display = 'block';
+      // Add smooth animation class
+      setTimeout(() => {
+        timer.classList.add('show');
+      }, 10);
+    });
+  }
+
+  hideHoldTimer() {
+    const holdTimers = document.querySelectorAll('.hold-timer');
+    holdTimers.forEach(timer => {
+      timer.classList.remove('show');
+      // Hide after animation completes
+      setTimeout(() => {
+        timer.style.display = 'none';
+      }, 300);
+    });
+  }
+
   toggleRecord() {
     this.state.record.recording = !this.state.record.recording;
     this.updateUI();
     console.log(`Recording ${this.state.record.recording ? 'started' : 'stopped'}`);
     
-    // Add your actual recording logic here
+    // Update ALL record buttons (both 3x3 grid AND compact controls)
+    const recordButtons = document.querySelectorAll('[data-control="record"]');
+    recordButtons.forEach(button => {
+      // Update CSS classes for recording state
+      if (this.state.record.recording) {
+        button.classList.add('recording');
+      } else {
+        button.classList.remove('recording');
+      }
+      
+      // Update icon
+      const img = button.querySelector('img');
+      if (img) {
+        if (this.state.record.recording) {
+          img.src = 'images/record-active.svg';
+          img.alt = 'Stop Recording';
+        } else {
+          img.src = 'images/record.svg';
+          img.alt = 'Record';
+        }
+      }
+      
+      // Update text
+      const span = button.querySelector('span');
+      if (span) {
+        span.textContent = this.state.record.recording ? 'Stop' : 'Record';
+      }
+    });
+    
     this.onRecordToggle(this.state.record.recording);
   }
 
@@ -188,68 +279,59 @@ hideHoldTimer() {
     this.updateUI();
     console.log(`Keypad ${this.state.keypad.open ? 'opened' : 'closed'}`);
     
-    // Add your keypad show/hide logic here
     this.onKeypadToggle(this.state.keypad.open);
   }
 
   handleAdd() {
-    console.log('Add participant clicked');
-    // Add your add participant logic here
-    this.onAddParticipant();
+    this.state.add.active = !this.state.add.active;
+    this.updateUI();
+    console.log(`Add ${this.state.add.active ? 'activated' : 'deactivated'}`);
+    
+    this.onAddToggle(this.state.add.active);
   }
 
   handleShare() {
     this.state.share.active = !this.state.share.active;
     this.updateUI();
-    console.log(`Screen share ${this.state.share.active ? 'started' : 'stopped'}`);
+    console.log(`Share ${this.state.share.active ? 'activated' : 'deactivated'}`);
     
-    // Add your screen share logic here
     this.onShareToggle(this.state.share.active);
   }
 
   handlePark() {
-    console.log('Park call clicked');
-    // Add your park call logic here
-    this.onParkCall();
+    this.state.park.active = !this.state.park.active;
+    this.updateUI();
+    console.log(`Park ${this.state.park.active ? 'activated' : 'deactivated'}`);
+    
+    this.onParkToggle(this.state.park.active);
   }
 
   handleVM() {
-    console.log('Voicemail clicked');
-    // Add your voicemail logic here
-    this.onVoicemail();
+    this.state.vm.active = !this.state.vm.active;
+    this.updateUI();
+    console.log(`VM ${this.state.vm.active ? 'activated' : 'deactivated'}`);
+    
+    this.onVMToggle(this.state.vm.active);
   }
 
   handleMore() {
     this.state.more.open = !this.state.more.open;
-    const moreControls = document.getElementById('more-controls');
-    
-    if (this.state.more.open) {
-      moreControls.classList.remove('hidden');
-    } else {
-      moreControls.classList.add('hidden');
-    }
-    
     this.updateUI();
     console.log(`More controls ${this.state.more.open ? 'opened' : 'closed'}`);
+    
+    this.onMoreToggle(this.state.more.open);
   }
 
   handleEndCall() {
-    console.log('End call clicked');
-    // Add your end call logic here
-    if (confirm('Are you sure you want to end the call?')) {
-      this.onEndCall();
-    }
+    console.log('Ending call');
+    this.onEndCall();
   }
 
-  // UI Update Methods
   updateUI() {
-    // Update all instances of each control
-    this.updateControlButton('mic', this.state.mic);
-    this.updateControlButton('hold', this.state.hold);
-    this.updateControlButton('record', this.state.record);
-    this.updateControlButton('keypad', this.state.keypad);
-    this.updateControlButton('share', this.state.share);
-    this.updateControlButton('more', this.state.more);
+    // Update button states
+    Object.keys(this.state).forEach(control => {
+      this.updateControlButton(control, this.state[control]);
+    });
   }
 
   updateControlButton(control, state) {
@@ -289,7 +371,7 @@ hideHoldTimer() {
   updateButtonText(button, control, state) {
     const span = button.querySelector('span');
     if (!span) return;
-
+    
     switch (control) {
       case 'mic':
         span.textContent = state.muted ? 'Unmute' : 'Mute';
@@ -300,91 +382,51 @@ hideHoldTimer() {
       case 'record':
         span.textContent = state.recording ? 'Stop' : 'Record';
         break;
-      case 'share':
-        span.textContent = state.active ? 'Stop Share' : 'Share';
-        break;
     }
   }
 
-  // Event Binding
-  bindEvents() {
-    document.addEventListener('click', (e) => {
-      const button = e.target.closest('[data-control]');
-      if (!button) return;
-
-      const control = button.dataset.control;
-      
-      // Prevent default button behavior
-      e.preventDefault();
-      
-      // Handle the control action
-      switch (control) {
-        case 'mic': this.toggleMic(); break;
-        case 'hold': this.toggleHold(); break;
-        case 'transfer': this.handleTransfer(); break;
-        case 'record': this.toggleRecord(); break;
-        case 'keypad': this.handleKeypad(); break;
-        case 'add': this.handleAdd(); break;
-        case 'share': this.handleShare(); break;
-        case 'park': this.handlePark(); break;
-        case 'vm': this.handleVM(); break;
-        case 'more': this.handleMore(); break;
-        case 'end-call': this.handleEndCall(); break;
-        default:
-          console.log(`Unknown control: ${control}`);
-      }
-    });
-  }
-
-  // Callback Methods (implement your actual logic here)
-  onMicToggle(muted) {
-    // Implement actual microphone mute/unmute logic
-    console.log(`Implement mic ${muted ? 'mute' : 'unmute'} logic here`);
+  // Event callbacks
+  onMuteToggle(muted) {
+    console.log('Mute toggled:', muted);
   }
 
   onHoldToggle(active) {
-    // Implement actual hold/unhold logic
-    console.log(`Implement ${active ? 'hold' : 'unhold'} logic here`);
+    console.log('Hold toggled:', active);
   }
 
   onRecordToggle(recording) {
-    // Implement actual recording start/stop logic
-    console.log(`Implement ${recording ? 'start' : 'stop'} recording logic here`);
+    console.log('Record toggled:', recording);
   }
 
   onKeypadToggle(open) {
-    // Implement keypad show/hide logic
-    console.log(`Implement keypad ${open ? 'show' : 'hide'} logic here`);
+    console.log('Keypad toggled:', open);
+  }
+
+  onTransferToggle(active) {
+    console.log('Transfer toggled:', active);
+  }
+
+  onAddToggle(active) {
+    console.log('Add toggled:', active);
   }
 
   onShareToggle(active) {
-    // Implement screen share start/stop logic
-    console.log(`Implement ${active ? 'start' : 'stop'} screen share logic here`);
+    console.log('Share toggled:', active);
   }
 
-  onAddParticipant() {
-    // Implement add participant logic
-    console.log('Implement add participant logic here');
+  onParkToggle(active) {
+    console.log('Park toggled:', active);
   }
 
-  onParkCall() {
-    // Implement park call logic
-    console.log('Implement park call logic here');
+  onVMToggle(active) {
+    console.log('VM toggled:', active);
   }
 
-  onVoicemail() {
-    // Implement voicemail logic
-    console.log('Implement voicemail logic here');
+  onMoreToggle(open) {
+    console.log('More toggled:', open);
   }
 
   onEndCall() {
-    // Implement end call logic
-    console.log('Implement end call logic here');
-    // Example: window.close() or redirect
+    console.log('End call triggered');
   }
 }
-
-// Initialize Call Controls when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  window.callControls = new CallControls();
-});

@@ -57,10 +57,15 @@
       <!-- Default 3x3 Grid (landing view) -->
       <div class="controls-grid" id="default-grid">
         <button class="control-btn" data-control="mic"><img src="images/mic.svg" alt="Mute"><span>Mute</span></button>
-        <button class="control-btn" data-control="hold"><img src="images/hold.svg" alt="Hold"><span>Hold</span></button>
+        <button class="control-btn" data-control="hold"><img src="images/hold.svg" alt="Hold"><span>Hold</span><div class="hold-timer"></div></button>
         <button class="control-btn" data-control="transfer"><img src="images/transfer.svg" alt="Transfer"><span>Transfer</span></button>
         <button class="control-btn" data-control="record"><img src="images/record.svg" alt="Record"><span>Record</span></button>
-        <button class="control-btn" data-control="keypad"><img src="images/keypad.svg" alt="Keypad"><span>Keypad</span></button>
+
+        <button class="control-btn" data-control="keypad">
+          <img src="images/keypad.svg" alt="Keypad">
+          <span>Keypad</span>
+        </button>
+        
         <button class="control-btn" data-control="add"><img src="images/add.svg" alt="Add"><span>Add</span></button>
         <button class="control-btn" data-control="share"><img src="images/share.svg" alt="Share"><span>Share</span></button>
         <button class="control-btn" data-control="park"><img src="images/park.svg" alt="Park"><span>Park</span></button>
@@ -70,7 +75,7 @@
       <!-- Compact Horizontal Controls (transcript open mode) -->
       <div class="compact-bar hidden" id="compact-bar">
         <button class="control-btn" data-control="mic"><img src="images/mic.svg" alt="Mute"><span>Mute</span></button>
-        <button class="control-btn" data-control="hold"><img src="images/hold.svg" alt="Hold"><span>Hold</span></button>
+        <button class="control-btn" data-control="hold"><img src="images/hold.svg" alt="Hold"><span>Hold</span><div class="hold-timer"></div></button>
         <button class="control-btn" data-control="transfer"><img src="images/transfer.svg" alt="Transfer"><span>Transfer</span></button>
         <button class="control-btn" data-control="record"><img src="images/record.svg" alt="Record"><span>Record</span></button>
         <button class="control-btn" id="more-btn" data-control="more"><img src="images/more-horizontal.svg" alt="More"><span>More</span></button>
@@ -621,7 +626,30 @@
         </div>
       </div>
     </div>
+
+<!-- ==================================
+     TRANSFER SUCCESS MODAL
+     ================================== -->
+     <div class="transfer-success-modal hidden" id="transfer-success-modal">
+      <div class="transfer-backdrop"></div>
+      <div class="success-modal-content">
+        <div class="success-animation">
+          <div class="checkmark-circle">
+            <div class="checkmark"></div>
+          </div>
+        </div>
+        <div class="success-message">
+          <h2>Transfer Successful</h2>
+          <p id="success-text">Transfer completed successfully</p>
+        </div>
+      </div>
+    </div>
     
+ 
+
+    <!-- ==================================
+         SCRIPTS
+         ================================== -->
     <script src="js/transfer-flow.js"></script>
     <script src="js/call-control.js"></script>
     <script src="js/main.js"></script>
