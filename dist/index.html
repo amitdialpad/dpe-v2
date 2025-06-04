@@ -645,11 +645,83 @@
       </div>
     </div>
     
- 
+ <!-- ==================================
+     KEYPAD MODAL
+     ================================== -->
+<div class="keypad-modal hidden" id="keypad-modal">
+  <div class="keypad-backdrop"></div>
+  <div class="keypad-modal-content">
+    <!-- Header with close button -->
+    <div class="keypad-header">
+      
+      <button class="keypad-close-btn" id="keypad-close-btn">
+        <img src="images/transfer-close.svg" alt="Close">
+      </button>
+    </div>
+    
+    <!-- Output Display -->
+    <div class="keypad-display">
+      <span id="keypad-output"></span>
+      <button class="keypad-backspace" data-action="delete">
+        <span class="backspace-icon">⌫</span>
+      </button>
+    </div>
+    
+    <!-- Keypad Grid -->
+    <div class="keypad-grid">
+      <button class="keypad-btn" data-digit="1">
+        <span class="digit">1</span>
+      </button>
+      <button class="keypad-btn" data-digit="2">
+        <span class="digit">2</span>
+        <span class="letters">ABC</span>
+      </button>
+      <button class="keypad-btn" data-digit="3">
+        <span class="digit">3</span>
+        <span class="letters">DEF</span>
+      </button>
+      <button class="keypad-btn" data-digit="4">
+        <span class="digit">4</span>
+        <span class="letters">GHI</span>
+      </button>
+      <button class="keypad-btn" data-digit="5">
+        <span class="digit">5</span>
+        <span class="letters">JKL</span>
+      </button>
+      <button class="keypad-btn" data-digit="6">
+        <span class="digit">6</span>
+        <span class="letters">MNO</span>
+      </button>
+      <button class="keypad-btn" data-digit="7">
+        <span class="digit">7</span>
+        <span class="letters">PQRS</span>
+      </button>
+      <button class="keypad-btn" data-digit="8">
+        <span class="digit">8</span>
+        <span class="letters">TUV</span>
+      </button>
+      <button class="keypad-btn" data-digit="9">
+        <span class="digit">9</span>
+        <span class="letters">WXYZ</span>
+      </button>
+      <button class="keypad-btn" data-digit="*">
+        <span class="digit">*</span>
+      </button>
+      <button class="keypad-btn" data-digit="0">
+        <span class="digit">0</span>
+        <span class="letters">+</span>
+      </button>
+      <button class="keypad-btn" data-digit="#">
+        <span class="digit">#</span>
+      </button>
+    </div>
+  </div>
+</div>
 
     <!-- ==================================
          SCRIPTS
          ================================== -->
+    <script src="js/keypad.js"></script>
     <script src="js/transfer-flow.js"></script>
     <script src="js/call-control.js"></script>
     <script src="js/main.js"></script>

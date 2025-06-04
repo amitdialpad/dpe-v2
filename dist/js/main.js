@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 🔥 Initialize CallControls
   console.log('Initializing CallControls...');
   const callControls = new CallControls();
+  window.callControls = callControls; // Make it globally accessible
   console.log('CallControls initialized:', callControls);
 
   function resetAll() {

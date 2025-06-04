@@ -275,12 +275,25 @@ startHoldTimer() {
   }
 
   handleKeypad() {
-    this.state.keypad.open = !this.state.keypad.open;
-    this.updateUI();
-    console.log(`Keypad ${this.state.keypad.open ? 'opened' : 'closed'}`);
-    
-    this.onKeypadToggle(this.state.keypad.open);
+  this.state.keypad.open = !this.state.keypad.open;
+  this.updateUI();
+  console.log(`Keypad ${this.state.keypad.open ? 'opened' : 'closed'}`);
+  
+  // Initialize keypad on first use
+  if (!this.keypad) {
+    console.log('🔍 Creating keypad instance');
+    this.keypad = new Keypad();
   }
+  
+  // Show/hide keypad modal
+  if (this.state.keypad.open) {
+    this.keypad.show();
+  } else {
+    this.keypad.hide();
+  }
+  
+  this.onKeypadToggle(this.state.keypad.open);
+}
 
   handleAdd() {
     this.state.add.active = !this.state.add.active;
