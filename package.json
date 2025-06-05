@@ -12,5 +12,9 @@
     "Callbar"
   ],
   "author": "Amit Ayre",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "live-server": "^1.2.2"
+  }
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Call Interface</title>
+  <title>Dialpad Everywhere V2</title>
   <!-- Dialtone Stylesheets -->
   <!-- <link rel="stylesheet" href="https://unpkg.com/@dialpad/dialtone/dist/css/dialtone-default-theme.min.css"> -->
   <!-- <link rel="stylesheet" href="https://unpkg.com/@dialpad/dialtone/dist/css/dialtone.min.css"> -->
@@ -596,7 +596,7 @@
           <!-- To Card (Selected Contact) -->
           <div class="transfer-card to-card">
             <div class="card-avatar">
-              <img src="images/avatar-placeholder.png" alt="Contact" id="to-avatar">
+              <img src="" alt="Contact" id="to-avatar">
             </div>
             <div class="card-info">
               <div class="card-name" id="to-name">Contact Name</div>
@@ -671,6 +671,7 @@
     <div class="keypad-grid">
       <button class="keypad-btn" data-digit="1">
         <span class="digit">1</span>
+        <span class="letters">&nbsp;</span>
       </button>
       <button class="keypad-btn" data-digit="2">
         <span class="digit">2</span>
@@ -718,12 +719,368 @@
   </div>
 </div>
 
+<!-- ==================================
+     ADD CONTACT SELECTION MODAL (Separate & Complete)
+     ================================== -->
+<div class="add-contact-modal hidden" id="add-contact-modal">
+  <div class="transfer-backdrop"></div>
+  <div class="add-modal-content">
+    <!-- Header -->
+    <div class="add-header">
+      <div class="add-title">
+        <img src="images/add.svg" alt="Add" class="add-icon">
+        <h3>Add to Call</h3>
+      </div>
+      <button class="add-close-btn" id="add-close-btn">
+        <img src="images/transfer-close.svg" alt="Close">
+      </button>
+    </div>
+    
+    <!-- Search Bar -->
+    <div class="add-search">
+      <input type="text" placeholder="Search by name or number" id="add-search-input">
+      <img src="images/search.svg" alt="Search" class="search-icon">
+    </div>
+    
+    <!-- Recent Section (shown by default) -->
+    <div class="add-section" id="add-recent-section">
+      <h3 class="section-label">Recent</h3>
+      <div class="add-contacts" id="add-recent-contacts">
+        <div class="contact-item" data-name="Sarah Johnson" data-phone="(415) 555-0123" data-team="Engineering" data-status="available">
+          <div class="contact-avatar">
+            <img src="images/avatar-sarah.png" alt="Sarah Johnson">
+          </div>
+          <div class="contact-info">
+            <div class="contact-main">
+              <div class="contact-name">Sarah Johnson</div>
+              <div class="contact-status">
+                <span class="status-dot available"></span>
+                <span class="status-text">Available • Engineering</span>
+              </div>
+            </div>
+            <div class="contact-phone">
+              <span class="phone-number">(415) 555-0123</span>
+              <img src="images/chevron-down.svg" alt="More options" class="chevron-icon">
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-item" data-name="Mike Chen" data-phone="(415) 555-0124" data-team="Support" data-status="available">
+          <div class="contact-avatar">
+            <img src="images/avatar-mike.png" alt="Mike Chen">
+          </div>
+          <div class="contact-info">
+            <div class="contact-main">
+              <div class="contact-name">Mike Chen</div>
+              <div class="contact-status">
+                <span class="status-dot available"></span>
+                <span class="status-text">Available • Support</span>
+              </div>
+            </div>
+            <div class="contact-phone">
+              <span class="phone-number">(415) 555-0124</span>
+              <img src="images/chevron-down.svg" alt="More options" class="chevron-icon">
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-item" data-name="Emma Wilson" data-phone="(415) 555-0125" data-team="Sales" data-status="on-call">
+          <div class="contact-avatar">
+            <img src="images/avatar-emma.png" alt="Emma Wilson">
+          </div>
+          <div class="contact-info">
+            <div class="contact-main">
+              <div class="contact-name">Emma Wilson</div>
+              <div class="contact-status">
+                <span class="status-dot on-call"></span>
+                <span class="status-text">On call • Sales</span>
+              </div>
+            </div>
+            <div class="contact-phone">
+              <span class="phone-number">(415) 555-0125</span>
+              <img src="images/chevron-down.svg" alt="More options" class="chevron-icon">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Search Results Section (hidden by default) -->
+    <div class="add-section hidden" id="add-search-section">
+      <div class="add-contacts" id="add-search-contacts">
+        <!-- Search results will be populated here -->
+      </div>
+      <div class="add-no-results hidden" id="add-no-results">
+        <p>No contacts found</p>
+      </div>
+    </div>
+    
+    <!-- Hidden contact database for search -->
+    <div class="add-contact-database hidden">
+      <div class="contact-item" data-name="Alex Rodriguez" data-phone="(415) 111-2222" data-team="Engineering" data-status="available">
+        <div class="contact-avatar"><img src="images/avatar-alex.png" alt="Alex Rodriguez"></div>
+        <div class="contact-info">
+          <div class="contact-main">
+            <div class="contact-name">Alex Rodriguez</div>
+            <div class="contact-status">
+              <span class="status-dot available"></span>
+              <span class="status-text">Available • Engineering</span>
+            </div>
+          </div>
+          <div class="contact-phone">
+            <span class="phone-number">(415) 111-2222</span>
+            <img src="images/chevron-down.svg" alt="More options" class="chevron-icon">
+          </div>
+        </div>
+      </div>
+      
+      <div class="contact-item" data-name="Emma Wilson" data-phone="(415) 555-0125" data-team="Sales" data-status="on-call">
+        <div class="contact-avatar"><img src="images/avatar-emma.png" alt="Emma Wilson"></div>
+        <div class="contact-info">
+          <div class="contact-main">
+            <div class="contact-name">Emma Wilson</div>
+            <div class="contact-status">
+              <span class="status-dot on-call"></span>
+              <span class="status-text">On call • Sales</span>
+            </div>
+          </div>
+          <div class="contact-phone">
+            <span class="phone-number">(415) 555-0125</span>
+            <img src="images/chevron-down.svg" alt="More options" class="chevron-icon">
+          </div>
+        </div>
+      </div>
+      
+      <div class="contact-item" data-name="David Chen" data-phone="(415) 333-4444" data-team="Product" data-status="available">
+        <div class="contact-avatar"><img src="images/avatar-david.png" alt="David Chen"></div>
+        <div class="contact-info">
+          <div class="contact-main">
+            <div class="contact-name">David Chen</div>
+            <div class="contact-status">
+              <span class="status-dot available"></span>
+              <span class="status-text">Available • Product</span>
+            </div>
+          </div>
+          <div class="contact-phone">
+            <span class="phone-number">(415) 333-4444</span>
+            <img src="images/chevron-down.svg" alt="More options" class="chevron-icon">
+          </div>
+        </div>
+      </div>
+      
+      <div class="contact-item" data-name="Lisa Thompson" data-phone="(415) 444-5555" data-team="Marketing" data-status="off-duty">
+        <div class="contact-avatar"><img src="images/avatar-lisa.png" alt="Lisa Thompson"></div>
+        <div class="contact-info">
+          <div class="contact-main">
+            <div class="contact-name">Lisa Thompson</div>
+            <div class="contact-status">
+              <span class="status-dot off-duty"></span>
+              <span class="status-text">Off duty • Marketing</span>
+            </div>
+          </div>
+          <div class="contact-phone">
+            <span class="phone-number">(415) 444-5555</span>
+            <img src="images/chevron-down.svg" alt="More options" class="chevron-icon">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ==================================
+     GROUP CALL CONFIRMATION MODAL (Full Screen)
+     ================================== -->
+<div class="group-call-modal hidden" id="group-call-modal">
+  <div class="transfer-backdrop"></div>
+  <div class="group-call-content">
+    <!-- Header -->
+    <div class="group-call-header">
+      <div class="group-call-title">
+        <img src="images/add.svg" alt="Add" class="group-call-icon">
+        <h3>Start Group Call</h3>
+      </div>
+      
+      <button class="group-call-close-btn" id="group-call-close-btn">
+        <img src="images/transfer-close.svg" alt="Close">
+      </button>
+    </div>
+    
+    <!-- Contact Flow -->
+    <div class="group-call-flow">
+      <!-- NEW Contact Card (Selected contact to add) -->
+      <div class="group-call-card">
+        <div class="card-avatar">
+          <img src="" alt="Contact" id="group-call-contact-avatar">
+        </div>
+        <div class="card-info">
+          <div class="card-name" id="group-call-contact-name">Contact Name</div>
+          <div class="card-status">
+            <span class="status-dot available" id="group-call-status-dot"></span>
+            <span class="status-text" id="group-call-status-text">Available • Team</span>
+          </div>
+          <div class="card-phone" id="group-call-contact-phone">(415) 000-0000</div>
+        </div>
+      </div>
+      
+      <!-- Plus Icon -->
+      <div class="group-call-plus">
+        <img src="images/add.svg" alt="Adding">
+        <span class="group-call-label">Adding to call with</span>
+      </div>
+      
+      <!-- CURRENT Contact Card (Maria - existing call) -->
+      <div class="group-call-card">
+        <div class="card-avatar">
+          <img src="images/avatar.png" alt="Maria Reyes" id="current-caller-avatar">
+        </div>
+        <div class="card-info">
+          <div class="card-name" id="current-caller-name">Maria Reyes</div>
+          <div class="card-phone" id="current-caller-phone">(919) 123-4567</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="group-call-actions">
+      <button class="group-call-primary-btn" id="add-to-group-btn">
+        Add to Group Call
+      </button>
+      
+      <div class="group-call-secondary-actions">
+        <button class="group-call-secondary-btn" id="group-call-cancel-btn">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================================
+     CALL CONNECTING STATE MODAL (Full Screen)
+     ================================== -->
+<div class="connecting-modal hidden" id="connecting-modal">
+  <div class="transfer-backdrop"></div>
+  <div class="connecting-content">
+    <!-- Header -->
+    <div class="connecting-header">
+      <h3>Connecting...</h3>
+      <button class="connecting-close-btn" id="connecting-close-btn">
+        <img src="images/transfer-close.svg" alt="Close">
+      </button>
+    </div>
+    
+    <!-- Connecting Flow -->
+    <div class="connecting-flow">
+      <!-- Maria on Hold -->
+      <div class="connecting-card on-hold">
+        <div class="card-avatar">
+          <img src="images/avatar.png" alt="Maria Reyes">
+          <div class="hold-indicator">
+            <span>ON HOLD</span>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-name">Maria Reyes</div>
+          <div class="card-status">On hold</div>
+        </div>
+      </div>
+      
+      <!-- Connecting Animation -->
+      <div class="connecting-animation">
+        <div class="connecting-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span class="connecting-label">Connecting to</span>
+      </div>
+      
+      <!-- New Contact Being Called -->
+      <div class="connecting-card calling">
+        <div class="card-avatar">
+          <img src="" alt="Contact" id="connecting-contact-avatar">
+          <div class="calling-indicator">
+            <span>CALLING</span>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-name" id="connecting-contact-name">Contact Name</div>
+          <div class="card-status" id="connecting-contact-phone">(415) 000-0000</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Cancel Button -->
+    <div class="connecting-actions">
+      <button class="connecting-cancel-btn" id="connecting-cancel-btn">
+        Cancel Call
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================================
+     VM SUCCESS MODAL
+     ================================== -->
+<div class="vm-success-modal hidden" id="vm-success-modal">
+  <div class="transfer-backdrop"></div>
+  <div class="vm-success-modal-content">
+    <div class="success-animation">
+      <div class="checkmark-circle">
+        <div class="checkmark"></div>
+      </div>
+    </div>
+    <div class="success-message">
+      <h2> A voicemail greeting was successfully dropped</h2>
+      <p id="vm-success-text"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================================
+     PARK CONNECTING MODAL
+     ================================== -->
+<div class="park-connecting-modal hidden" id="park-connecting-modal">
+  <div class="transfer-backdrop"></div>
+  <div class="park-connecting-content">
+    <div class="connecting-animation">
+      <div class="connecting-spinner"></div>
+    </div>
+    
+    <div class="park-connecting-info">
+      <h2>Parking your call</h2>
+      <p>Your call is currently being parked.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================================
+     PARK SUCCESS MODAL
+     ================================== -->
+<div class="park-success-modal hidden" id="park-success-modal">
+  <div class="transfer-backdrop"></div>
+  <div class="park-success-modal-content">
+    <div class="success-animation">
+      <div class="checkmark-circle">
+        <div class="checkmark"></div>
+      </div>
+    </div>
+    <div class="success-message">
+      <h2>Call Parked Successfully</h2>
+      <p id="park-success-text">Maria Reyes has been parked</p>
+    </div>
+  </div>
+</div>
+
     <!-- ==================================
          SCRIPTS
          ================================== -->
     <script src="js/keypad.js"></script>
     <script src="js/transfer-flow.js"></script>
     <script src="js/call-control.js"></script>
+    <script src="js/add-flow.js"></script>
+    <script src="js/vm-flow.js"></script>
+    <script src="js/park-flow.js"></script>
     <script src="js/main.js"></script>
     </body>
 </html>

@@ -15,6 +15,7 @@ class CallControls {
     };
     
     this.transferFlow = null;
+    this.addFlow = null;
     this.init();
   }
 
@@ -165,18 +166,18 @@ class CallControls {
     this.onHoldToggle(this.state.hold.active);
   }
 
-startHoldTimer() {
-  this.holdStartTime = Date.now();
-  
-  // Show the timer immediately with 0:00
-  this.updateHoldTimer(); // Add this line - shows "0:00" immediately
-  
-  this.holdTimerInterval = setInterval(() => {
-    this.updateHoldTimer();
-  }, 1000);
-  
-  this.showHoldTimer();
-}
+  startHoldTimer() {
+    this.holdStartTime = Date.now();
+    
+    // Show the timer immediately with 0:00
+    this.updateHoldTimer(); // Add this line - shows "0:00" immediately
+    
+    this.holdTimerInterval = setInterval(() => {
+      this.updateHoldTimer();
+    }, 1000);
+    
+    this.showHoldTimer();
+  }
 
   stopHoldTimer() {
     if (this.holdTimerInterval) {
@@ -275,30 +276,42 @@ startHoldTimer() {
   }
 
   handleKeypad() {
-  this.state.keypad.open = !this.state.keypad.open;
-  this.updateUI();
-  console.log(`Keypad ${this.state.keypad.open ? 'opened' : 'closed'}`);
-  
-  // Initialize keypad on first use
-  if (!this.keypad) {
-    console.log('🔍 Creating keypad instance');
-    this.keypad = new Keypad();
+    this.state.keypad.open = !this.state.keypad.open;
+    this.updateUI();
+    console.log(`Keypad ${this.state.keypad.open ? 'opened' : 'closed'}`);
+    
+    // Initialize keypad on first use
+    if (!this.keypad) {
+      console.log('🔍 Creating keypad instance');
+      this.keypad = new Keypad();
+    }
+    
+    // Show/hide keypad modal
+    if (this.state.keypad.open) {
+      this.keypad.show();
+    } else {
+      this.keypad.hide();
+    }
+    
+    this.onKeypadToggle(this.state.keypad.open);
   }
-  
-  // Show/hide keypad modal
-  if (this.state.keypad.open) {
-    this.keypad.show();
-  } else {
-    this.keypad.hide();
-  }
-  
-  this.onKeypadToggle(this.state.keypad.open);
-}
 
   handleAdd() {
     this.state.add.active = !this.state.add.active;
     this.updateUI();
     console.log(`Add ${this.state.add.active ? 'activated' : 'deactivated'}`);
+    
+    if (this.state.add.active) {
+      // Use AddFlow for proper contact selection
+      if (!this.addFlow) {
+        this.addFlow = new AddFlow(this);
+      }
+      this.addFlow.start();
+    } else {
+      if (this.addFlow) {
+        this.addFlow.close();
+      }
+    }
     
     this.onAddToggle(this.state.add.active);
   }
