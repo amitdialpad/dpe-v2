@@ -29,42 +29,45 @@ document.addEventListener('DOMContentLoaded', () => {
   window.callControls = callControls; // Make it globally accessible
   console.log('CallControls initialized:', callControls);
 
-  function resetAll() {
-    // Hide all panels
-    transcriptPanel.classList.add('hidden');
-    playbookPanel.classList.add('hidden');
-    livecoachPanel.classList.add('hidden');
-    salesforcePanel.classList.add('hidden');
-    
-    // Reset call interface to default state
-    callInterface.classList.remove('transcript-open');
-    
-    // Show default controls
-    defaultGrid.classList.remove('hidden');
-    defaultEndCall.classList.remove('hidden');
-    compactBar.classList.add('hidden');
-    
-    // Reset all tab buttons
-    allToolBtns.forEach(btn => btn.classList.remove('active'));
-    
-    // Reset icons
-    resetIconImages();
-    
-    // Hide any visible hold timers when switching views
-    const holdTimers = document.querySelectorAll('.hold-timer');
-    holdTimers.forEach(timer => {
-      timer.classList.remove('show');
-      timer.style.display = 'none';
-    });
-    
-    // Clear current panel
-    currentOpenPanel = null;
-    
-    // Re-show hold timer if call is currently on hold
-    if (callControls && callControls.state.hold.active) {
-      callControls.showHoldTimer();
-    }
+function resetAll() {
+  // Hide all panels
+  transcriptPanel.classList.add('hidden');
+  playbookPanel.classList.add('hidden');
+  livecoachPanel.classList.add('hidden');
+  salesforcePanel.classList.add('hidden');
+  
+  // Reset call interface to default state
+  callInterface.classList.remove('transcript-open');
+  
+  // Show default controls
+  defaultGrid.classList.remove('hidden');
+  defaultEndCall.classList.remove('hidden');
+  compactBar.classList.add('hidden');
+  
+  // HIDE MORE CONTROLS when returning to default view
+  moreControls.classList.add('hidden'); // ADD THIS LINE
+  
+  // Reset all tab buttons
+  allToolBtns.forEach(btn => btn.classList.remove('active'));
+  
+  // Reset icons
+  resetIconImages();
+  
+  // Hide any visible hold timers when switching views
+  const holdTimers = document.querySelectorAll('.hold-timer');
+  holdTimers.forEach(timer => {
+    timer.classList.remove('show');
+    timer.style.display = 'none';
+  });
+  
+  // Clear current panel
+  currentOpenPanel = null;
+  
+  // Re-show hold timer if call is currently on hold
+  if (callControls && callControls.state.hold.active) {
+    callControls.showHoldTimer();
   }
+}
 
   function resetIconImages() {
     transcriptImg.src = 'images/ai_on_tab1.svg';

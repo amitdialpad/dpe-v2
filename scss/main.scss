@@ -9,14 +9,20 @@ $pink: #EC4899;
 $green: #AEFB3C;
 $red: #D90A45;
 
+// App Container Constraints
+$app-max-width: 500px;
+$app-min-width: 375px;
+
 // Base styles
 .top-actions {
     display: flex;
     gap: 0.5rem;
-    position: absolute;
+    //position: absolute;
     top: 1rem;
     right: 1rem;
     z-index: 1000;
+    justify-content: flex-end;
+    padding-top: 8px;
   
     .icon-btn {
       background: none;
@@ -45,11 +51,22 @@ $red: #D90A45;
     min-height: 100vh;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-image: url('../images/bg.png');
-    background-size: cover;
+    //background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: #000;
+    //background-color: #000;
     color: $text-white;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 500px;
+  min-width: 375px;
+  min-height: 100vh;
+  background-color: transparent;
 }
 
 .call-interface {
@@ -60,7 +77,8 @@ $red: #D90A45;
     flex-direction: column;
     overflow: hidden; // keep no body scroll leaks
     min-height: 100%; // default natural height
-    padding: 1rem;
+    padding: 0.5rem;
+    padding-top: 0rem;
     //padding-bottom: 80px;
     height: auto;
     //min-height: 100%;
@@ -71,7 +89,7 @@ $red: #D90A45;
   
     &.transcript-open {
       justify-content: flex-start;
-      gap: 1rem;
+      //gap: 1rem;
       height: 100vh; // 💥 only when Transcript opens
 
   
@@ -158,7 +176,7 @@ $red: #D90A45;
     flex-direction: column;
     align-items: center;
     margin: 1rem;
-    margin-top: 3rem;
+    //margin-top: 3rem;
     padding-bottom: 2rem;
     transition: all 0.3s ease-in-out;
     text-align: center;
@@ -216,8 +234,9 @@ $red: #D90A45;
     justify-content: flex-start;
     text-align: left;
     gap: 1rem;
-    margin-bottom: 0rem;
+    //margin-bottom: 0rem;
     padding-bottom: 0rem;
+    padding-top: 0rem;
   
     .avatar img {
       width: 48px;
@@ -302,10 +321,10 @@ $red: #D90A45;
           display: flex;
           flex-direction: column;
           align-items: center;
-          font-size: 0.85rem;
+          //font-size: 0.85rem;
           transition: background 0.3s;
-          row-gap: .5rem;
-          max-width: 100px;
+          row-gap: .3rem;
+          max-width: 86px;
           cursor: pointer;
 
           &.recording {
@@ -457,8 +476,8 @@ $red: #D90A45;
   
 // For compact bar specifically
 .compact-bar .control-btn .hold-timer {
-  top: 136px;
-  left: 115px;
+  top: 132px;
+  left: 118px;
   background: rgba(255, 255, 255, 0.95);
   color: #000000;
   padding: 4px 8px;
@@ -556,16 +575,19 @@ $red: #D90A45;
   .bottom-tools {
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
+    left: 50%; // Center horizontally
+    transform: translateX(-50%); // Center it properly
+    max-width: 500px; // Respect container max-width
+    min-width: 375px; // Respect container min-width
     height: 64px;
     background: #1a1a1a;
     border-top: 1px solid #333;
     display: flex;
-    justify-content: space-between; /* Even spacing without weird gaps */
+    justify-content: space-around; /* Even spacing without weird gaps */
     align-items: center;
     z-index: 1000;
-    padding: 0 0.5rem; /* small padding on left/right */
+    padding: 0 0.3rem; /* small padding on left/right */
+    width: 100%;
   
     .tool-btn {
       flex: 1; /* 🔥 Makes each button same width */
@@ -717,17 +739,18 @@ $red: #D90A45;
   
       .control-btn {
         flex: 1;
-        width: 56px;
-        min-width: 40px;
+        //width: 56px;
+        max-width: 56px;
         height: 56px;
-        background: #1f1f1f0a;
+        background: #1f1f1f50;
         border-radius: 20%;
         padding: 0.3rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: #ffffff90;
+        color: #fff;
+        font-size: 0.65rem;
         border: none;
         transition: background 0.2s ease;
         cursor: pointer;
@@ -771,15 +794,11 @@ $red: #D90A45;
       .end-call {
         background: $red;
         color: white;
-        width: 54px !important;
-        height: 54px !important;
-        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: bold;
-        font-size: 0.75rem;
-        padding: 0;
+
+        
       }
     }
   }
@@ -792,11 +811,10 @@ $red: #D90A45;
   
     .control-btn {
         flex: 1;
-        max-width: 60px;
-        min-width: 48px;
-        height: 60px;
-        background: #1f1f1f0a;
-        border-radius: 10%;
+        max-width: 56px;
+        height: 56px;
+        background: #1f1f1f50;
+        border-radius: 20%;
         padding: 0.3rem;
         display: flex;
         flex-direction: column;
@@ -1621,6 +1639,16 @@ $red: #D90A45;
   &.hidden {
     display: none;
   }
+  
+  .transfer-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 11000;
+  }
 
   .success-modal-content {
     position: relative;
@@ -1932,7 +1960,7 @@ $red: #D90A45;
     position: absolute;
     top: 0;
     left: 0;
-    border: 2px solid #1a1a1a;
+    border: 0.5px solid #1a1a1a;
   }
   
   .avatar-secondary {
@@ -1941,8 +1969,8 @@ $red: #D90A45;
     border-radius: 50%;
     position: absolute;
     bottom: -2px;
-    right: -36px;
-    border: 2px solid #1a1a1a;
+    right: -15px;
+    border: 0.5px solid #1a1a1a;
   }
 }
 
@@ -1970,7 +1998,7 @@ $red: #D90A45;
     max-width: 100vw;
     height: 95%;
     background: #1A1A1A;
-    border-radius: 16px;
+    //border-radius: 16px;
     padding: 1rem;
     z-index: 13001;
   }
@@ -2167,7 +2195,7 @@ $red: #D90A45;
     max-width: 100vw;
     height: 95%;
     background: #1A1A1A;
-    border-radius: 16px;
+    //border-radius: 16px;
     padding: 1rem;
     z-index: 11501;
     display: flex;
@@ -2559,6 +2587,16 @@ $red: #D90A45;
     display: none;
   }
 
+  .transfer-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+  }
+
   .vm-success-modal-content {
     position: relative;
     background: #1A1A1A;
@@ -2695,6 +2733,17 @@ $red: #D90A45;
     display: none;
   }
 
+  .transfer-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+  }
+
+
   .park-success-modal-content {
     position: relative;
     background: #1A1A1A;
@@ -2761,3 +2810,4 @@ $red: #D90A45;
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+

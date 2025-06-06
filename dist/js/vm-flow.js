@@ -57,7 +57,7 @@ class VMFlow {
     // Auto-hide after 3 seconds
     setTimeout(() => {
       this.hideSuccess();
-    }, 8000);
+    }, 3000);
   }
 
   hideSuccess() {
