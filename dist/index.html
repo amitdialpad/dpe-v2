@@ -107,12 +107,24 @@
          ================================== -->
     <div class="transcript-panel panel hidden" id="transcript-panel">
       <div class="ai-status">
-        <span class="label-text">Ai Transcribing...</span>
-        <label class="dt-toggle">
-          <input type="checkbox" checked>
-          <span class="slider"></span>
-        </label>         
+        <div class="ai-status-left">
+          <span>AI Transcribing...</span>
+          <div class="dt-toggle">
+            <input type="checkbox" id="dt-toggle" checked>
+            <label for="dt-toggle" class="slider"></label>
+          </div>
+        </div>
+        
+        <div class="ai-status-actions">
+          <button class="transcript-pin-btn" id="transcript-pin-btn">
+            📌
+          </button>
+          <button class="transcript-close-btn" id="transcript-close-btn">
+            ✕
+          </button>
+        </div>
       </div>
+
       <div class="transcript-content">
         <div class="small-avatar"><img src="images/avatar-maria-small.png" alt="Maria Reyes">
         <div class="msg user"><strong>Maria Reyes</strong><p>Hi, I’d like to inquire about upgrading my credit card account.</p></div></div>
@@ -1083,6 +1095,9 @@
     <script src="js/add-flow.js"></script>
     <script src="js/vm-flow.js"></script>
     <script src="js/park-flow.js"></script>
+    <script src="js/universal-pin.js"></script>
+    <script src="js/transcript-live.js"></script>
+    <script src="js/transcript-controls.js"></script>
     <script src="js/main.js"></script>
     </body>
 </html>
