@@ -1,4 +1,4 @@
-// js/universal-pin.js - CORRECTED VERSION
+// js/universal-pin.js - CLEANED VERSION
 class UniversalPin {
   constructor() {
     this.pinnedPanels = []; 
@@ -20,6 +20,9 @@ class UniversalPin {
     this.addPinControlsToAllPanels();
     this.bindPinEvents();
     this.monitorPanelSwitching();
+    
+    // Add smooth transition styles
+    this.addTransitionStyles();
   }
 
   fixCallInterfaceLayout() {
@@ -27,8 +30,30 @@ class UniversalPin {
     if (callInterface) {
       // Always use flex-start instead of space-between
       callInterface.style.justifyContent = 'flex-start';
-      console.log('✅ Fixed call-interface justify-content to flex-start');
+      
+      // Ensure the interface can grow and scroll naturally
+      callInterface.style.minHeight = '100vh';
+      callInterface.style.height = 'auto';
+      
+      console.log('✅ Fixed call-interface layout for natural scrolling');
     }
+  }
+
+  addTransitionStyles() {
+    // Add CSS for smooth transitions
+    const style = document.createElement('style');
+    style.textContent = `
+      .panel-transitioning {
+        transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+      }
+      .panel {
+        transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      }
+      .pinned-panels-container .panel.pinned {
+        transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+      }
+    `;
+    document.head.appendChild(style);
   }
 
   addPinControlsToAllPanels() {
@@ -73,7 +98,7 @@ class UniversalPin {
   }
 
   bindPinEvents() {
-    // Use a more direct approach
+    // Handle transcript pin button specifically
     setTimeout(() => {
       const transcriptPinBtn = document.getElementById('transcript-pin-btn');
       if (transcriptPinBtn) {
@@ -91,23 +116,35 @@ class UniversalPin {
       }
     }, 1000);
 
-    // Handle other panels
+    // Handle other panels with event delegation
     document.addEventListener('click', (e) => {
-      if (e.target.classList.contains('panel-pin-btn') || e.target.closest('.panel-pin-btn')) {
-        const btn = e.target.classList.contains('panel-pin-btn') ? e.target : e.target.closest('.panel-pin-btn');
-        const panelName = btn.dataset.panel;
+      // Pin button handling
+      const pinBtn = e.target.closest('.panel-pin-btn');
+      if (pinBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const panelName = pinBtn.dataset.panel;
         console.log(`🎯 ${panelName} pin clicked in universal system`);
         this.togglePin(panelName);
+        return;
       }
 
-      if (e.target.classList.contains('panel-close-btn') || e.target.closest('.panel-close-btn')) {
-        const btn = e.target.classList.contains('panel-close-btn') ? e.target : e.target.closest('.panel-close-btn');
-        const panelName = btn.dataset.panel;
+      // Close button handling
+      const closeBtn = e.target.closest('.panel-close-btn');
+      if (closeBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const panelName = closeBtn.dataset.panel;
         this.closePanel(panelName);
+        return;
       }
 
-      if (e.target.id === 'transcript-close-btn') {
+      // Transcript close button (special case)
+      if (e.target.id === 'transcript-close-btn' || e.target.closest('#transcript-close-btn')) {
+        e.preventDefault();
+        e.stopPropagation();
         this.closePanel('transcript');
+        return;
       }
     });
   }
@@ -126,7 +163,7 @@ class UniversalPin {
             return false;
           }
           
-          // For unpinned panels, we need to override the normal behavior
+          // For unpinned panels, handle positioning
           setTimeout(() => {
             this.handlePanelSwitchWithPinned(panelName);
           }, 50);
@@ -164,14 +201,26 @@ class UniversalPin {
       
       // Style it appropriately
       panel.style.height = 'auto';
-      panel.style.maxHeight = 'calc(60vh - 100px)';
+      panel.style.maxHeight = '70vh';
       panel.style.marginTop = '1rem';
+      panel.style.overflow = 'auto';
       
       console.log(`📱 ${panelName} positioned below pinned panels`);
+      
+      // Auto-scroll to show the new panel
+      setTimeout(() => {
+        panel.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start',
+          inline: 'nearest'
+        });
+      }, 500);
     }
   }
 
   togglePin(panelName) {
+    console.log(`🔄 togglePin called for: ${panelName}`);
+    
     if (this.panelStates[panelName]) {
       this.unpinPanel(panelName);
     } else {
@@ -191,7 +240,14 @@ class UniversalPin {
                    document.getElementById('transcript-pin-btn');
     
     if (panel) {
+      // Add smooth transition
+      panel.classList.add('panel-transitioning');
       panel.classList.add('pinned');
+      
+      // Remove transition class after animation
+      setTimeout(() => {
+        panel.classList.remove('panel-transitioning');
+      }, 400);
     }
     
     if (pinBtn) {
@@ -206,6 +262,9 @@ class UniversalPin {
   }
 
   unpinPanel(panelName) {
+    console.log(`🔄 Unpinning ${panelName}...`);
+    
+    // Clean up our pin state
     this.panelStates[panelName] = false;
     this.pinnedPanels = this.pinnedPanels.filter(p => p !== panelName);
     
@@ -214,26 +273,45 @@ class UniversalPin {
                    document.getElementById('transcript-pin-btn');
     
     if (panel) {
+      // Add smooth transition
+      panel.classList.add('panel-transitioning');
       panel.classList.remove('pinned');
-      panel.classList.add('hidden'); // Close the panel
+      
+      // Move panel back to its normal location
+      const callInterface = document.querySelector('.call-interface');
+      if (callInterface) {
+        callInterface.appendChild(panel);
+      }
+      
+      // Reset panel styles
+      panel.style.height = '';
+      panel.style.maxHeight = '';
+      panel.style.order = '';
+      
+      // Remove transition class after animation
+      setTimeout(() => {
+        panel.classList.remove('panel-transitioning');
+      }, 400);
     }
     
     if (pinBtn) {
       pinBtn.classList.remove('pinned');
     }
     
+    // Clean up tab state
     this.updateTabState(panelName, false);
+    
+    // Update container after moving the panel
     this.updatePinnedContainer();
     
-    // Check if any panels are still pinned
-    if (this.pinnedPanels.length === 0) {
-      // No panels pinned, return to 3x3 grid
-      this.returnToDefaultView();
-    }
-    
+    // Show notification
     this.showNotification(`${this.getPanelDisplayName(panelName)} unpinned`);
     
     console.log(`📌 ${panelName} unpinned. Total pinned: ${this.pinnedPanels.length}`);
+    
+    if (this.pinnedPanels.length === 0) {
+      console.log('✅ No more pinned panels - user can now close normally');
+    }
   }
 
   createPinnedContainer() {
@@ -244,7 +322,7 @@ class UniversalPin {
     // Ensure layout is always flex-start
     callInterface.style.justifyContent = 'flex-start';
     
-    // Adjust margins directly
+    // Adjust margins
     const header = callInterface.querySelector('.header');
     const compactBar = callInterface.querySelector('.compact-bar');
     const moreControls = document.getElementById('more-controls');
@@ -260,17 +338,15 @@ class UniversalPin {
       pinnedContainer.id = 'pinned-panels-container';
       pinnedContainer.className = 'pinned-panels-container';
       
-      // Find #more-controls and insert after it
+      // Find insertion point
       const moreControls = document.getElementById('more-controls');
       if (moreControls) {
         moreControls.insertAdjacentElement('afterend', pinnedContainer);
       } else {
-        // Fallback: insert after compact-bar
         const compactBar = document.querySelector('.compact-bar');
         if (compactBar) {
           compactBar.insertAdjacentElement('afterend', pinnedContainer);
         } else {
-          // Final fallback: insert after header
           const header = document.querySelector('.header');
           if (header) {
             header.insertAdjacentElement('afterend', pinnedContainer);
@@ -287,18 +363,22 @@ class UniversalPin {
       if (panel && panel.classList.contains('pinned')) {
         panel.classList.remove('hidden');
         panel.style.order = index;
-        panel.style.height = '200px';
-        panel.style.maxHeight = '200px';
+        panel.style.height = '300px';
+        panel.style.maxHeight = '300px';
         pinnedContainer.appendChild(panel);
       }
     });
     
-    // Also check for any active unpinned panels
+    // Handle active unpinned panels
     const activeTab = document.querySelector('.tool-btn.active');
     if (activeTab) {
       const activePanelName = activeTab.id.replace('-btn', '');
       if (!this.panelStates[activePanelName]) {
         setTimeout(() => {
+          const activePanel = document.getElementById(`${activePanelName}-panel`);
+          if (activePanel) {
+            activePanel.style.marginTop = '1rem';
+          }
           this.positionUnpinnedPanel(activePanelName);
         }, 100);
       }
@@ -310,11 +390,8 @@ class UniversalPin {
     const callInterface = document.querySelector('.call-interface');
     
     if (this.pinnedPanels.length === 0 && pinnedContainer) {
-      // No pinned panels left, remove container and reset layout
+      // Remove container and reset layout
       pinnedContainer.remove();
-      
-      // DON'T reset justify-content - keep it as flex-start
-      // callInterface.style.justifyContent = '';
       
       // Reset margins
       const header = callInterface.querySelector('.header');
@@ -331,59 +408,13 @@ class UniversalPin {
     }
   }
 
-  returnToDefaultView() {
-    const callInterface = document.querySelector('.call-interface');
-    
-    // Remove classes to return to default layout
-    callInterface.classList.remove('transcript-open');
-    
-    // DON'T reset justify-content - keep it as flex-start
-    // callInterface.style.justifyContent = '';
-    
-    // Reset margins
-    const header = callInterface.querySelector('.header');
-    const compactBar = callInterface.querySelector('.compact-bar');
-    const moreControls = document.getElementById('more-controls');
-    
-    if (header) header.style.marginBottom = '';
-    if (compactBar) compactBar.style.margin = '';
-    if (moreControls) moreControls.style.margin = '';
-    
-    // Hide all panels
-    const allPanels = document.querySelectorAll('.panel');
-    allPanels.forEach(panel => {
-      panel.classList.add('hidden');
-    });
-    
-    // Deactivate all tab buttons
-    const allTabBtns = document.querySelectorAll('.tool-btn');
-    allTabBtns.forEach(btn => {
-      btn.classList.remove('active');
-    });
-    
-    // Show default controls
-    const defaultGrid = document.getElementById('default-grid');
-    const controlsArea = document.querySelector('.controls-area');
-    const endCallWrapper = document.querySelector('.end-call-wrapper');
-    
-    if (defaultGrid) defaultGrid.classList.remove('hidden');
-    if (controlsArea) controlsArea.classList.remove('hidden'); 
-    if (endCallWrapper) endCallWrapper.classList.remove('hidden');
-    
-    // Hide compact controls
-    if (compactBar) compactBar.classList.add('hidden');
-    if (moreControls) moreControls.classList.add('hidden');
-    
-    console.log('🏠 Returned to default 3x3 grid view');
-  }
-
   closePanel(panelName) {
     // If pinned, unpin first
     if (this.panelStates[panelName]) {
       this.unpinPanel(panelName);
     }
     
-    // Only close if no panels are pinned, otherwise just hide this panel
+    // Handle closing based on pinned state
     if (this.pinnedPanels.length === 0) {
       const tabBtn = document.getElementById(`${panelName}-btn`);
       if (tabBtn && tabBtn.classList.contains('active')) {

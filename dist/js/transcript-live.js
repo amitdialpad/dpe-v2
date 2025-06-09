@@ -51,11 +51,11 @@ bindToggleEvent() {
       <div class="warning-backdrop"></div>
       <div class="warning-content">
         <div class="warning-icon">⚠️</div>
-        <h3>Turn off AI Transcription?</h3>
-        <p>Turning off transcription will also disable other AI features like Live Coach suggestions and Playbook tracking.</p>
+        <h3>Turn off Ai Transcription?</h3>
+        <p>Turning off transcription will also disable other Ai features like Live Coach suggestions and Playbook tracking.</p>
         <div class="warning-actions">
           <button class="warning-cancel-btn">Keep Transcription On</button>
-          <button class="warning-confirm-btn">Turn Off AI</button>
+          <button class="warning-confirm-btn">Turn Off Ai</button>
         </div>
       </div>
     `;
